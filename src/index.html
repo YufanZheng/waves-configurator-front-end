@@ -2,13 +2,34 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>WavesConfigurator</title>
+  <title>Waves Configurator</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/img/logo.png">
+  <!-- Bootstrap CSS : Version 3.3.7 -->
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- JQuery JS : Version 3.2.0 -->
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="assets/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+  <!-- Bootstrap JS : Version 3.3.7 -->
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- jsPlumb JS -->
+  <script src="../node_modules/jsplumb/dist/js/jsplumb.min.js"></script>
+
 </head>
 <body>
-  <app-root>Loading...</app-root>
+  <app>Loading...</app>
+  <script>
+    jsPlumb.ready(function(){
+      console.log("jsPlumb ready");
+
+      jsPlumb.bind('connection',function(info){
+          alert("Connection event triggered");
+      });
+    });
+  </script>
 </body>
 </html>

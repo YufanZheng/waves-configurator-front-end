@@ -1,0 +1,32 @@
+<div class="container text-center">
+  <h2>Edit the TriG configuration file to run Waves Project.</h2>
+  <h4 class="text-primary">You could either <strong>copy</strong> or <strong>load</strong> a TriG file into the textarea or edit it directly in the textarea.</h4>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-1">
+      <a class="btn btn-secondary pull-left" routerLink="/" routerLinkActive="active">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+          Back
+      </a>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1">
+      <span class="btn btn-info btn-file pull-right">
+          Load an Existing TriG File <input type="file" accept=".trig" (change)="loadTrig($event)">
+      </span>
+    </div>
+  </div> 
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <textarea autoGrow placeholder="Import a TriG Configuration File" name="trigConfig" class="form-control" rows="25" #textarea></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-sm-offset-3">
+      <button type="button" class="btn btn-lg btn-block btn-success" (click)="runProgram(textarea.value)">Run the Program </button>
+    </div>
+    <div class="col-sm-3">
+      <button type="button" class="btn btn-lg btn-block btn-danger">Stop the Program </button>
+    </div>
+  </div>
+</div>

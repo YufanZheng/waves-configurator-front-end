@@ -1,0 +1,80 @@
+{  
+   "project":{  
+      "name":"",
+      "description":"",
+      "license":"",
+      "version":"1.0.0"
+   },
+   "cluster":{  
+      "rspEngine":"unknown",
+      "services":[  
+         {  
+            "name":"Coordinator",
+            "types":[  
+               "Zookeeper"
+            ],
+            "ipPlaceholder":"IP address",
+            "defaultPort":2181,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"Messaging",
+            "types":[  
+               "Kafka"
+            ],
+            "ipPlaceholder":"IP address",
+            "defaultPort":9092,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"NoSQL DB",
+            "types":[  
+               "Redis",
+               "MongoDB",
+               "InfluxDB"
+            ],
+            "ipPlaceholder":"IP address",
+            "defaultPort":6379,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"Sparql DB",
+            "types":[  
+               "RDF4J",
+               "Virtuoso",
+               "Jena"
+            ],
+            "ipPlaceholder":"IP address",
+            "defaultPort":8080,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"RSP Engine",
+            "types":[  
+               "Storm-Nimbus"
+            ],
+            "ipPlaceholder":"Nimbus IP address",
+            "defaultPort":6627,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"RSP Engine",
+            "types":[  
+               "Storm-UI"
+            ],
+            "ipPlaceholder":"UI IP address",
+            "defaultPort":8080,
+            "connectionStatus":"unknown"
+         },
+         {  
+            "name":"RSP Engine",
+            "types":[  
+               "Storm-Supervisor"
+            ],
+            "ipPlaceholder":"Supervisor IP address",
+            "defaultPort":6700,
+            "connectionStatus":"unknown"
+         }
+      ]
+   }
+}
