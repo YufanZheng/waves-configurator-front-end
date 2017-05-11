@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { ProjectDataService } from '../../app-services/project-data.service';
 
 // Use jQuery
@@ -11,7 +12,9 @@ import $ from 'jquery/dist/jquery';
 })
 export class ImportProjectComponent{
 
-  constructor(private projectDataService: ProjectDataService){
+  private serverUri: string = "http://localhost:8080/waves-configurator/jarxs/project-data/";
+
+  constructor( private http: Http ){
 
   }
   
@@ -25,26 +28,38 @@ export class ImportProjectComponent{
         var reader = new FileReader();
         reader.readAsText(file, "UTF-8");
         // Handle success, and errors
-        reader.onerror = this._errorHandler;
-        reader.onload = this._loaded;
+        reader.onerror = this.errorHandler;
+        reader.onload = this.loaded;
       }
     } else {
       alert('The File APIs are not fully supported by your browser.');
     }
   }
 
-  runProgram( trigConfig ){
+  uploadProject( trig ){
     // Save the TriG configuration file into Triple Store.
-    this.projectDataService.saveTrigInTripleStore(trigConfig);
+    let url     = this.serverUri + "load-trig";
+    let body    = trig;
+    let headers = new Headers();
+    headers.append("Content-Type", "text/plain; charset=utf-8");
+    // Post TriG String to Server
+    this.http.post(url, body, headers)
+      .map( res => res.text() )
+      .subscribe(
+          (msg) => { 
+              alert(msg);
+          },
+          error => { alert("Server Connection Error: Please check if the J2EE server is started.") }
+    );
   }
 
-  private _loaded(evt) {  
+  private loaded(evt) {  
     // Obtain the read file data    
     var fileString = evt.target.result;
     $('textarea').val(fileString); 
   }
 
-  private _errorHandler(evt) {
+  private errorHandler(evt) {
     if(evt.target.error.name == "NotReadableError") {
       // The file could not be read
       alert("The file could not be read");

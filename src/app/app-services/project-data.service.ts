@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable} from 'rxjs/Observable';
 
 // Use jQuery
 import $ from 'jquery/dist/jquery';
@@ -10,38 +12,9 @@ import $ from 'jquery/dist/jquery';
 export class ProjectDataService {
     
     private static projectData;
-    private _baseUrl: string = "http://localhost:8080/waves-configurator/jarxs/project-data/";
 
     constructor( private _http: Http ) { 
         this.initData();
-    }
-
-    /*-----------------------------------+
-     |     Http POST, PUT, GET etc.      |
-     +-----------------------------------*/
-
-    saveTrigInTripleStore( trig ){
-        let url = this._baseUrl + "load-trig";
-        let body = trig;
-        let headers = new Headers();
-        headers.append("Content-Type", "text/plain; charset=utf-8");
-        /*
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: trig,
-            contentType: "text/plain; charset=utf-8"
-        });
-        */
-
-        this._http.post(url, body, headers)
-            .subscribe(
-                () => {
-                    alert("File successfully uploaded!");
-                },
-                err => console.error(err)
-            );
-
     }
 
     /*-----------------------------------+

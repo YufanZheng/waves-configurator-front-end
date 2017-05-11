@@ -6,6 +6,7 @@ h2 {
 .btn-file {
     position: relative;
     overflow: hidden;
+    margin-right: 8px;
 }
 
 .btn-file input[type=file] {
