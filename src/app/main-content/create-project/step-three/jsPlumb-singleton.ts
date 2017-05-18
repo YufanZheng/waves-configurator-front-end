@@ -1,4 +1,4 @@
-import { ProjectDataService } from '../../../app-services/project-data.service';
+import { ProjectDataService } from '../project-data.service';
 
 declare var jsPlumb: any;
 

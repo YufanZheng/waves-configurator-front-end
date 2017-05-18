@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ToolTipModule } from 'angular2-tooltip';
 
-import { ProjectDataService } from './app-services/project-data.service';
+import { ProjectDataService } from './main-content/create-project/project-data.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { StepFourComponent } from './main-content/create-project/step-four/step-
 import { RawStreamSettingsComponent } from './main-content/create-project/step-three/raw-stream-settings/raw-stream-settings.component';
 import { EmptySettingsComponent } from './main-content/create-project/step-three/empty-settings/empty-settings.component';
 import { ImportProjectComponent } from './main-content/import-project/import-project.component';
+import { WaitingPageComponent } from './main-content/waiting-page/waiting-page.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ImportProjectComponent } from './main-content/import-project/import-pro
     LeftSidebarComponent,
     RawStreamSettingsComponent,
     EmptySettingsComponent,
-    ImportProjectComponent
+    ImportProjectComponent,
+    WaitingPageComponent
   ],
   imports: [
     BrowserModule,

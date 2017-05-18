@@ -8,6 +8,7 @@ import { StepThreeComponent } from './main-content/create-project/step-three/ste
 import { StepFourComponent } from './main-content/create-project/step-four/step-four.component';
 import { ImportProjectComponent } from './main-content/import-project/import-project.component';
 import { ProjectDetailsComponent } from './main-content/project-details/project-details.component';
+import { ExecuteProjectComponent } from "app/main-content/execute-project/execute-project.component";
 
 const routes: Routes = [
     {path: '', component: WelcomePageComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
     {path: 'create-project-step-2', component: StepTwoComponent},
     {path: 'create-project-step-3', component: StepThreeComponent},
     {path: 'create-project-step-4', component: StepFourComponent},
-    {path: 'import-project', component: ImportProjectComponent}
+    {path: 'import-project', component: ImportProjectComponent},
+    {path: 'execute-project/:name', component: ExecuteProjectComponent}
 ];
 
 @NgModule({
@@ -33,5 +35,6 @@ export const routingComponents = [
     StepTwoComponent, 
     StepThreeComponent, 
     StepFourComponent,
-    ImportProjectComponent 
+    ImportProjectComponent,
+    ExecuteProjectComponent
 ]

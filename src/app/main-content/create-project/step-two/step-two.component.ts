@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Http } from '@angular/http';
-import { ProjectDataService } from '../../../app-services/project-data.service';
+import { ProjectDataService } from '../project-data.service';
 
 @Component({
   selector: 'step-two',

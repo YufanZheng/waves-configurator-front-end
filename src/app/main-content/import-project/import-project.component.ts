@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { ProjectDataService } from '../../app-services/project-data.service';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 // Use jQuery
 import $ from 'jquery/dist/jquery';
@@ -12,45 +11,55 @@ import $ from 'jquery/dist/jquery';
 })
 export class ImportProjectComponent{
 
-  private serverUri: string = "http://localhost:8080/waves-configurator/jarxs/project-data/";
+  private serverUri: string  = "http://localhost:8080/waves-configurator/jarxs/project-data/";
+  private waiting:   boolean = false; 
+  private waitMsg:   string  = "";
+  private project:   any;
 
-  constructor( private http: Http ){
-
-  }
+  constructor( private router: Router ){}
   
   loadTrig( event ){
-    // Check for the various File API support.
-    if (File && FileReader && FileList && Blob) {
-      // Load the TriG file
+    if (File && FileReader && FileList && Blob) { // Check for the various File API support.
       var file = event.srcElement.files[0];
       if( file ){
-        // Read the content of file
         var reader = new FileReader();
         reader.readAsText(file, "UTF-8");
-        // Handle success, and errors
         reader.onerror = this.errorHandler;
         reader.onload = this.loaded;
       }
-    } else {
-      alert('The File APIs are not fully supported by your browser.');
-    }
+    } else { alert('The File APIs are not fully supported by your browser.'); }
   }
 
   uploadProject( trig ){
-    // Save the TriG configuration file into Triple Store.
-    let url     = this.serverUri + "load-trig";
-    let body    = trig;
-    let headers = new Headers();
-    headers.append("Content-Type", "text/plain; charset=utf-8");
-    // Post TriG String to Server
-    this.http.post(url, body, headers)
-      .map( res => res.text() )
-      .subscribe(
-          (msg) => { 
-              alert(msg);
-          },
-          error => { alert("Server Connection Error: Please check if the J2EE server is started.") }
-    );
+    let destination = this.serverUri + "load-trig";
+
+    let xhr: XMLHttpRequest = new XMLHttpRequest();
+    xhr.open("POST", destination, true);
+    xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");
+    xhr.onreadystatechange = (event) => {
+      if (xhr.readyState == XMLHttpRequest.DONE) {
+        var response = JSON.parse(xhr.responseText);
+        if( response.success ){
+          this.project = response;
+          alert( "Successfully upload project " + this.project.projectName+ ", the TriG configuration is located at: " + this.project.graphLocation );
+          this.router.navigate(['/execute-project', this.project.projectName]);
+        } else {
+          alert( response.errorMessage );
+        }
+      }
+    }
+    xhr.onloadstart = (event) => {
+      this.waitMsg = "Uploading Project ...";
+      this.waiting = !this.waiting;
+    }
+    xhr.onloadend = (event) => {
+      this.waitMsg = "";
+      this.waiting = !this.waiting;
+    }
+    xhr.onerror = (event) => {
+      alert("Cannot connect to Server, please check if you have launched the server.");
+    }
+    xhr.send(trig);
   }
 
   private loaded(evt) {  

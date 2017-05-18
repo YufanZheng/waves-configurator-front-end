@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProjectDataService } from '../../../../app-services/project-data.service';
+import { ProjectDataService } from '../../project-data.service';
 
 @Component({
   selector: 'raw-stream-settings',

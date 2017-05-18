@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
-import { ProjectDataService } from '../../../app-services/project-data.service';
+import { ProjectDataService } from '../project-data.service';
 import { JsPlumbSingleton } from './jsPlumb-singleton';
 
 // Use jQuery
