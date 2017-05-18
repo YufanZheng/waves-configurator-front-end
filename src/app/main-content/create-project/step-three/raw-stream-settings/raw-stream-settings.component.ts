@@ -41,7 +41,7 @@ export class RawStreamSettingsComponent implements OnInit {
         "filepath": this.filepath
       }
     }
-    ProjectDataService.setComponentSettingsById(this.selectedComponentId, settings);
+    //ProjectDataService.setComponentSettingsById(this.selectedComponentId, settings);
     console.log(this.projectDataService.getWorkflowInfo());
   }
 

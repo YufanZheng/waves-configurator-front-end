@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 
 @Component({
@@ -10,27 +11,18 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   // A variable to save current creating's project data
   @Input() project;
-
-  private licenseList;
-
-  constructor(private projectDataService: ProjectDataService) { }
+  private licenseList = [];
+    
+  constructor(private service: ProjectDataService, private http: Http) { 
+    this.http.get('src/app/app-data/license-list.json')
+        .subscribe(res => this.licenseList = res.json());
+  }
 
   ngOnInit() {
-    // Set the default value
-    this.licenseList = [
-      "Open Data Common Open Database License (CC BY 3.0)",
-      "Attribution, 3.0 not transposed (CC BY-SA 3.0)",
-      "Paternity - Sharing identity, 3.0 not transposed (CC BY-ND 3.0)",
-      "Paternity - No modification, 3.0 not transposed (CC BY 3.0)",
-      "Paternity - No commercial use, 3.0 not transposed (CC BY 3.0)",
-      "Paternity - No commercial use - Sharing identity, 3.0 not transposed (CC BY 3.0)",
-      "Paternity - No commercial use - No modification, 3.0 not transposed (CC BY 3.0)"
-    ];
-    this.project = this.projectDataService.getProjectInfo();
+    this.project = this.service.getProjectInfo();
   }
   
   ngOnDestroy() {
-    this.projectDataService.setProjectInfo(this.project);
+    this.service.setProjectInfo(this.project);
   }
-
 }

@@ -13,56 +13,61 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   @Input() cluster;
   private defaultPort;
 
-  constructor(private projectDataService: ProjectDataService, private _http: Http) { 
-    this._http.get('src/config/default-port.json')
+  constructor(private service: ProjectDataService, private http: Http) { 
+    this.http.get('src/app/app-data/default-port.json')
         .subscribe(res => this.defaultPort = res.json());
   }
 
   ngOnInit() { 
-    this.cluster = this.projectDataService.getClusterInfo();
+    this.cluster = this.service.getClusterInfo();
   }
 
   ngOnDestroy() {
-    this.projectDataService.setClusterInfo(this.cluster);
+    this.service.setClusterInfo(this.cluster);
   }
 
-  private chooseEngine(type){
+  chooseEngine(type){
     this.cluster.rspEngine = type;
-    this.projectDataService.setClusterInfo(this.cluster);
   }
 
-  private changeDefaultPort(type, index){
+  /**
+   * @desc  When the type of choices for service changes, the default port changes as well.
+   */
+  changeDefaultPort(type, index){
     this.cluster.services[index].defaultPort = this.defaultPort[type];
   }
 
-  private addService(service, index){
-    this.projectDataService.addClusterService(service, index);
+  addService(service, index){
+    this.cluster.services.splice(index, 0, service);
   }
 
-  private removeService(index){
-    this.projectDataService.removeClusterService(index);
+  removeService(index){
+    this.cluster.services.splice(index, 1);
   }
 
-  private checkConnectionForAll(){
+  /**
+   * @return "yes", "no" or "unknown"
+   */
+  checkConnection(ip, port){
+    return "no";
+  }
+
+  checkConnectionForAll(){
     for( var i = 0; i < this.cluster.services.length; i++ ){
       var ip = this.cluster.services[i].ip;
       var port = this.cluster.services[i].port;
       this.cluster.services[i].connectionStatus = this.checkConnection(ip, port);
-      this.projectDataService.setClusterInfo(this.cluster);
+      this.service.setClusterInfo(this.cluster);
     }
-  }
-
-  private checkConnection(ip, port){
-    return "no";
   }
 
   /**
    * 
    * @param serviceName i.e. "Coordinator" etc
    * @param serviceList 
-   * @param index
+   * @param index       The index of row in the page
    * 
-   * @desc  Only the first time appearence's label will be shown in page
+   * @desc  Only the first time appearence's label for each type will be shown in page
    */
   private firstAppearance(serviceName, serviceList, index){
     for( var i: number = 0; i < index; i++ ){
@@ -75,9 +80,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
  /**
   * 
-  * @param serviceType 
+  * @param serviceType  Service type
   * @param serviceList 
-  * @param index 
+  * @param index        The index of row in the page
   *
  * @desc  "Add" row button will only be shown when it's the first time show in this type
   */

@@ -60,7 +60,7 @@ export class JsPlumbSingleton {
             var targetId = conn.targetId;
 
             console.log("Add workflow link from: " + sourceId + " " + targetId);
-            ProjectDataService.addWorkflowLink(sourceId, targetId);
+            //ProjectDataService.addWorkflowLink(sourceId, targetId);
         });
     }
 

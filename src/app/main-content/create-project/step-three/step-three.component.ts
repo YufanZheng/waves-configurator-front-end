@@ -30,20 +30,20 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   private selectedComponentType;
   private jsPlumbInstance;
 
-  constructor(private projectDataService: ProjectDataService) { 
+  constructor(private service: ProjectDataService) { 
     this.selectedComponentType = "";
     this.jsPlumbInstance = JsPlumbSingleton.getInstance();
   }
 
   ngOnInit() { 
-    this.workflow = this.projectDataService.getWorkflowInfo();
+    this.workflow = this.service.getWorkflowInfo();
     // Draw each workflow components into panel
     this.drawWorkflow(this.workflow);
     //JsPlumbSingleton.bindConnEvents();
   }
 
   ngOnDestroy() {
-    this.projectDataService.setWorflowInfo(this.workflow);
+    this.service.setWorflowInfo(this.workflow);
   }
 
   selector = {
@@ -102,7 +102,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             "linksTo": [],
             "settings": {}
         };
-      ProjectDataService.addWorkflowComponent(newComponent);
+      //ProjectDataService.addWorkflowComponent(newComponent);
     }
   }
 
