@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
+import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 import { JsPlumbSingleton } from './jsPlumb-singleton';
 
@@ -18,65 +19,58 @@ declare var jsPlumb: any;
   selector: 'step-three',
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.css']
-
-
 })
-export class StepThreeComponent implements OnInit, OnDestroy {
+export class StepThreeComponent implements OnInit {
 
   // A variable to save project data which is currently created
   @Input() workflow;
+  @Output() stepEvent = new EventEmitter<number>();
   
   private selectedComponentId;
   private selectedComponentType;
   private jsPlumbInstance;
 
-  constructor(private service: ProjectDataService) { 
+  private selector;
+
+  constructor(private service: ProjectDataService, private http: Http) { 
+    var text = this.readStringFromFileAtPath('../../../../src/app/app-data/component-list.json');
+    this.selector = JSON.parse(text);
     this.selectedComponentType = "";
     this.jsPlumbInstance = JsPlumbSingleton.getInstance();
   }
 
   ngOnInit() { 
     this.workflow = this.service.getWorkflowInfo();
-    // Draw each workflow components into panel
-    this.drawWorkflow(this.workflow);
-    //JsPlumbSingleton.bindConnEvents();
-  }
-
-  ngOnDestroy() {
-    this.service.setWorflowInfo(this.workflow);
-  }
-
-  selector = {
-    "dataSources":  ["Raw Stream", "RDF Stream", "Document Feed", "Triple Store", "Sparql Endpoint", "External Sources"],
-    "functions":    ["RDF Converter", "Compresser", "Quantitative Filter", "Qualitative Filter"],
-    "wavesFilters": ["Semantic Filter", "Reasoning Filter"],
-    "dataAnalysis": ["Anomaly Detection"]
-  };
-
-  imgSourcePath(type: string){
-    return "src/assets/img/workflow/" + type.toLowerCase().split(' ').join('_') + ".png";
   }
 
   ngAfterViewInit() {
 
-    /* Init draggable component */
     $('.draggable').draggable({
-      // Could only be draggable in the droppable space
       containment: ".droppable",
-      // If the drop space is not correct, ui will come back to original place
       revert: 'invalid',
-      // Cursor style -> 'move'
       cursor: 'move',
-      // Drop space
       appendTo: ".droppable",
-      // During the time when we drag and move the ui, the helper helps to locate where we are
       helper: this.moveHelper
     });
 
-    /* Dropppable component */
     $('.droppable').droppable( {
-        // When drop event happens, handle drop event
-        drop: this.handleDropEvent
+        drop: ( event, ui) => {
+          if( $(ui.draggable).hasClass("draggable") ){
+            // First time to drop - Drag from selector panel
+            var newDiv = $(ui.helper).clone(false).removeClass("draggable");
+            $('.droppable').append(newDiv);
+            JsPlumbSingleton.initNode(newDiv);
+            var newComponent = {
+                "id": newDiv.attr("id"),
+                "componentType": newDiv.text().trim(),
+                "xPosition": newDiv.offset().left - $('.droppable').offset().left,
+                "yPosition": newDiv.offset().top - $('.droppable').offset().top,
+                "linksTo": [],
+                "settings": {}
+            };
+            this.service.addWorkflowComponent(newComponent);
+          }
+        }
     });
   }
 
@@ -88,22 +82,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             </div>`;
   }
 
-  handleDropEvent( event, ui ) {
-    // Check if the div comes from selector div : class == "draggable"
-    if( $(ui.draggable).hasClass("draggable") ){
-      var newDiv = $(ui.helper).clone(false).removeClass("draggable");
-      $('.droppable').append(newDiv);
-      JsPlumbSingleton.initNode(newDiv);
-      var newComponent = {
-            "id": newDiv.attr("id"),
-            "componentType": newDiv.text().trim(),
-            "xPosition": newDiv.offset().left - $('.droppable').offset().left,
-            "yPosition": newDiv.offset().top - $('.droppable').offset().top,
-            "linksTo": [],
-            "settings": {}
-        };
-      //ProjectDataService.addWorkflowComponent(newComponent);
-    }
+  stepChange(step){
+    this.updateComponentsLocation();
+    console.log(jsPlumb);
+    this.service.setWorflowInfo(this.workflow);
+    this.stepEvent.emit(step);
   }
 
   selectComponent(evt: any): void {
@@ -129,41 +112,26 @@ export class StepThreeComponent implements OnInit, OnDestroy {
      }
   }
 
-  private drawWorkflow(workflow: any): void{
-    this.appendComponents(workflow);
-    this.connectComponents(workflow);
-  }
-
-  private appendComponents(workflow: any): void{
-    for( var i = 0; i < this.workflow.components.length; i++ ){
-      var component = this.workflow.components[i];
-      // Create a new div and append to the '.droppable'
-      var newDiv = $('<div>', {"class": "component"})
-          .append( $('<img src="' + this.imgSourcePath(component.componentType)+ '"/>') )
-          .append( $('<p>' + component.componentType + '</p>') )
-          .append( $('<div>', {"class": "anchor-out"}) )
-          .attr("type", component.componentType)
-          .attr("id", component.id)
-          .css("position", "absolute")
-          .css("left", component.xPosition)
-          .css("top", component.yPosition)
-          .clone(false)
-      ;
-      $('.droppable').append(newDiv);
-      JsPlumbSingleton.initNode(newDiv);
+  private updateComponentsLocation(){
+    var componentDivs = document.getElementsByClassName('component');
+    for( var i = 0 ; i < componentDivs.length ; i++ ){
+      var id = componentDivs[i].id;
+      var div = $("#"+id);
+      var xPosition = div.offset().left - $('.droppable').offset().left;
+      var yPosition = div.offset().top - $('.droppable').offset().top;
+      this.service.setComponentLocationById(id, xPosition, yPosition);
     }
   }
 
-  private connectComponents(workflow: any): void{
-    for( var i = 0; i < this.workflow.components.length; i++ ){
-      var sourceId = this.workflow.components[i].id;
-      var targetIds = this.workflow.components[i].linksTo;
-      console.log(targetIds);
-      for( var j = 0; j < targetIds.length; j++ ){
-        var targetId = targetIds[j];
-        //console.log("Connect node :" + sourceId + " " + targetId);
-        JsPlumbSingleton.connectNode(sourceId, targetId);
-      }
-    }
+  private imgSourcePath(type: string){
+    return "src/assets/img/workflow/" + type.toLowerCase().split(' ').join('_') + ".png";
+  }
+
+  private readStringFromFileAtPath(pathOfFileToReadFrom){
+    var request = new XMLHttpRequest();
+    request.open("GET", pathOfFileToReadFrom, false);
+    request.send(null);
+    var text = request.responseText;
+    return text;
   }
 }

@@ -20,6 +20,14 @@ export class JsPlumbSingleton {
     });
 
     static getInstance(): any {
+        JsPlumbSingleton.instance.bind("connection", function(info){
+            // Here: conn is the only entry point to access connection information
+            var conn = info.connection;
+            var sourceId = conn.sourceId;
+            var targetId = conn.targetId;
+            alert("binding connection");
+            JsPlumbSingleton.instance.deleteConnection(conn);
+        });
         return JsPlumbSingleton.instance;
     }
 
@@ -40,7 +48,7 @@ export class JsPlumbSingleton {
         });
     }
 
-    static connectNode(sourceId: any, targetId: any): void {
+    connectNode(sourceId: any, targetId: any): void {
         JsPlumbSingleton.instance.connect({
             source: sourceId,
             target: targetId,
@@ -52,23 +60,10 @@ export class JsPlumbSingleton {
         });
     }
 
-    static bindConnEvents(){
-        JsPlumbSingleton.instance.bind('connection',function(info){
-            // Here: conn is the only entry point to access connection information
-            var conn = info.connection;
-            var sourceId = conn.sourceId;
-            var targetId = conn.targetId;
-
-            console.log("Add workflow link from: " + sourceId + " " + targetId);
-            //ProjectDataService.addWorkflowLink(sourceId, targetId);
-        });
-    }
-
     constructor(private projectDataService: ProjectDataService) { 
         if (JsPlumbSingleton.instance) {
             throw new Error('The JsPlumbSingleton is a singleton class and cannot be created!');
         }
         JsPlumbSingleton.instance = this;
-        JsPlumbSingleton.bindConnEvents();
     }
 }

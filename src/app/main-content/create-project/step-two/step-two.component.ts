@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 
@@ -7,10 +7,11 @@ import { ProjectDataService } from '../project-data.service';
   templateUrl: './step-two.component.html',
   styleUrls: ['./step-two.component.css']
 })
-export class StepTwoComponent implements OnInit, OnDestroy {
+export class StepTwoComponent implements OnInit {
 
   // A variable to save current creating's project data
   @Input() cluster;
+  @Output() stepEvent = new EventEmitter<number>();
   private defaultPort;
 
   constructor(private service: ProjectDataService, private http: Http) { 
@@ -22,8 +23,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.cluster = this.service.getClusterInfo();
   }
 
-  ngOnDestroy() {
+  stepChange(step){
     this.service.setClusterInfo(this.cluster);
+    this.stepEvent.emit(step);
   }
 
   chooseEngine(type){

@@ -1,11 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 .component {
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 2px;
     margin-top: 2px;
     float: left;
-    min-width: 64px;
+    min-width: 72px;
     border: 1px solid #333;
     background-color: white;
     border-radius: 12%;
@@ -52,14 +50,15 @@
 }
 
 .component img{
-    width: 25px;
+    width: 30px;
     height: auto;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    left: 24px;
+    position: absolute;
 }
 
 .component p{
+    padding-top: 30px;
     font-size: 12px;
     font-family: "SegoeUI-SemiLight-final", "Segoe UI SemiLight", "Segoe UI WPC Semilight", "Segoe UI", Segoe, Tahoma, Helvetica, Arial, sans-serif;
     text-align: center;

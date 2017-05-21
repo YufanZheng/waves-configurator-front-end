@@ -2,10 +2,10 @@
   <!-- Progress Bar-->
   <div class="row step-bar">
     <ul class="progressbar">
-        <li class="active" routerLink="/create-project-step-1" routerLinkActive="active">Project Information</li>
-        <li class="active" routerLink="/create-project-step-2" routerLinkActive="active">Cluster</li>
-        <li>Workflow</li>
-        <li>Monitorings Metrics</li>
+      <li class="active" (click)="stepChange(1)">Project Information</li>
+      <li class="active" (click)="stepChange(2)">Cluster</li>
+      <li>Workflow</li>
+      <li>Monitorings Metrics</li>
     </ul>
   </div>
   <!-- Title -->
@@ -151,11 +151,11 @@
               <span class="glyphicon glyphicon-pawn"></span>
               Check Connection
             </button>
-            <button type="button" class="btn btn-default" routerLink="/create-project-step-1" routerLinkActive="active">
+            <button type="button" class="btn btn-default" (click)="stepChange(1)">
               <span class="glyphicon glyphicon-arrow-left"></span>
               Previous
             </button>
-            <button type="button" class="btn btn-info" routerLink="/create-project-step-3" routerLinkActive="active">
+            <button type="button" class="btn btn-info" (click)="stepChange(3)">
               Next 
               <span class="glyphicon glyphicon-arrow-right"></span>
             </button>

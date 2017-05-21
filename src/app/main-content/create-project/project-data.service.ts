@@ -38,6 +38,12 @@ export class ProjectDataService {
     setWorflowInfo(workflow){
         this.projectData.workflow = workflow;
     }
+    getMetricsInfo(){
+        return this.projectData.metrics;
+    }
+    setMetricsInfo(metrics){
+        this.projectData.metrics = metrics;
+    }
 
     /*-----------------------------------+
      |          Workflow Settings        |
@@ -68,6 +74,17 @@ export class ProjectDataService {
             var currentComponent = this.projectData.workflow.components[i];
             if( currentComponent.id == componentId ){
                 this.projectData.workflow.components[i].settings = settings;
+                break;
+            }
+        }
+    }
+
+    setComponentLocationById(componentId, xPosition, yPosition){
+        for( var i = 0; i < this.projectData.workflow.components.length; i++ ){
+            var currentComponent = this.projectData.workflow.components[i];
+            if( currentComponent.id == componentId ){
+                this.projectData.workflow.components[i].settings.xPosition = xPosition;
+                this.projectData.workflow.components[i].settings.yPosition = yPosition;
                 break;
             }
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 
@@ -7,10 +7,11 @@ import { ProjectDataService } from '../project-data.service';
   templateUrl: './step-one.component.html',
   styleUrls: ['./step-one.component.css']
 })
-export class StepOneComponent implements OnInit, OnDestroy {
+export class StepOneComponent implements OnInit {
 
   // A variable to save current creating's project data
   @Input() project;
+  @Output() stepEvent = new EventEmitter<number>();
   private licenseList = [];
     
   constructor(private service: ProjectDataService, private http: Http) { 
@@ -21,8 +22,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.project = this.service.getProjectInfo();
   }
-  
-  ngOnDestroy() {
+
+  stepChange(step){
     this.service.setProjectInfo(this.project);
+    this.stepEvent.emit(step);
   }
 }

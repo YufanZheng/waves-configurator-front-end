@@ -2,10 +2,10 @@
   <!-- Progress Bar -->
   <div class="row step-bar">
     <ul class="progressbar">
-        <li class="active" routerLink="/create-project-step-1" routerLinkActive="active">Project Information</li>
-        <li>Cluster</li>
-        <li>Workflow</li>
-        <li>Monitorings Metrics</li>
+      <li class="active" (click)="stepChange(1)">Project Information</li>
+      <li>Cluster</li>
+      <li>Workflow</li>
+      <li>Monitorings Metrics</li>
     </ul>
   </div>
   <!-- Title -->
@@ -59,7 +59,7 @@
             <span class="glyphicon glyphicon-remove"></span>
             Cancel
           </button>
-          <button type="button" class="btn btn-info" routerLink="/create-project-step-2" routerLinkActive="active">
+          <button type="button" class="btn btn-info" (click)="stepChange(2)">
             Next 
             <span class="glyphicon glyphicon-arrow-right"></span>
           </button>

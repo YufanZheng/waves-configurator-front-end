@@ -30,6 +30,7 @@ import { StepFourComponent } from './main-content/create-project/step-four/step-
 
 import { RawStreamSettingsComponent } from './main-content/create-project/step-three/raw-stream-settings/raw-stream-settings.component';
 import { EmptySettingsComponent } from './main-content/create-project/step-three/empty-settings/empty-settings.component';
+import { CreateProjectComponent } from './main-content/create-project/create-project.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { EmptySettingsComponent } from './main-content/create-project/step-three
     RawStreamSettingsComponent,
     EmptySettingsComponent,
     ImportProjectComponent,
-    WaitingPageComponent
+    WaitingPageComponent,
+    CreateProjectComponent
   ],
   imports: [
     BrowserModule,

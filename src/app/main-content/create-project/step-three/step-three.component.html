@@ -1,8 +1,8 @@
 <div class="row step-bar"> 
   <ul class="progressbar">
-      <li class="active" routerLink="/create-project-step-1" routerLinkActive="active">Project Information</li>
-      <li class="active" routerLink="/create-project-step-2" routerLinkActive="active">Cluster</li>
-      <li class="active" routerLink="/create-project-step-3" routerLinkActive="active">Workflow</li>
+      <li class="active" (click)="stepChange(1)">Project Information</li>
+      <li class="active" (click)="stepChange(2)">Cluster</li>
+      <li class="active" (click)="stepChange(3)">Workflow</li>
       <li>Monitorings Metrics</li>
   </ul>
 </div>
@@ -98,7 +98,7 @@
       <div class="settings">
         <raw-stream-settings 
           *ngIf="selectedComponentType=='Raw Stream'" 
-          [selectedComponentId]="selectedComponentId"></raw-stream-settings>
+          [componentId]="selectedComponentId"></raw-stream-settings>
         <empty-settings 
           *ngIf="selectedComponentType==''"></empty-settings >
       </div>
@@ -110,11 +110,11 @@
             <span class="glyphicon glyphicon-remove"></span>
             Cancel
           </button>
-          <button type="button" class="btn btn-default" routerLink="/create-project-step-2" routerLinkActive="active">
+          <button type="button" class="btn btn-default" (click)="stepChange(2)">
             <span class="glyphicon glyphicon-arrow-left"></span>
             Previous
           </button>
-          <button type="button" class="btn btn-info" routerLink="/create-project-step-4" routerLinkActive="active">
+          <button type="button" class="btn btn-info" (click)="stepChange(4)">
             Next 
             <span class="glyphicon glyphicon-arrow-right"></span>
           </button>

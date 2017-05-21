@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
+import { ProjectDataService } from '../project-data.service';
 
 @Component({
   selector: 'step-four',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StepFourComponent implements OnInit {
 
-  constructor() { }
+  @Input() metrics;
+  @Output() stepEvent = new EventEmitter<number>();
+  private reporterList = ["Console"];
+
+  constructor(private service: ProjectDataService) { }
 
   ngOnInit() {
+    this.metrics = this.service.getMetricsInfo();
+  }
+
+  stepChange(step){
+    this.stepEvent.emit(step);
   }
 
 }
