@@ -1,5 +1,7 @@
 import { ProjectDataService } from '../project-data.service';
 
+// Use jQuery
+import $ from 'jquery/dist/jquery';
 declare var jsPlumb: any;
 
 export class JsPlumbSingleton {
@@ -25,8 +27,19 @@ export class JsPlumbSingleton {
             var conn = info.connection;
             var sourceId = conn.sourceId;
             var targetId = conn.targetId;
+
+            var sourceType = $("#"+sourceId).text().trim();
+            var targetType = $("#"+targetId).text().trim();
+            // Check if the connection is legal or not and suggest the legal connection for user.
+            var legalConns = JsPlumbSingleton.getLegalConns();
+            if( !JsPlumbSingleton.isLegalConn(sourceType, targetType, legalConns) ){
+                JsPlumbSingleton.instance.deleteConnection(conn);
+                JsPlumbSingleton.suggestLegalConns(sourceType, legalConns);
+            }
+
             alert("binding connection");
             JsPlumbSingleton.instance.deleteConnection(conn);
+
         });
         return JsPlumbSingleton.instance;
     }
@@ -65,5 +78,38 @@ export class JsPlumbSingleton {
             throw new Error('The JsPlumbSingleton is a singleton class and cannot be created!');
         }
         JsPlumbSingleton.instance = this;
+
+    }
+
+    static isLegalConn(sourceType, targetType, legalConns){
+        for( var legalConn of legalConns ){
+            if( legalConn.sourceType == sourceType ){
+                return legalConn.targetType.includes(targetType);
+            }
+        }
+        return false;
+    }
+
+    static suggestLegalConns(sourceType, legalConns){
+        for( var legalConn of legalConns ){
+            if( legalConn.sourceType == sourceType ){
+                alert( "WARNING: Illegal connection: " + sourceType + " could only be connected to: " + legalConn.targetType.join() );
+            }
+        }
+    }
+
+    static getLegalConns(){
+        let text = JsPlumbSingleton.readStringFromFileAtPath('../../../../src/app/app-data/legal-connections.json');
+        let legalConns = JSON.parse(text);
+        return legalConns;
+    }
+
+    static readStringFromFileAtPath(pathOfFileToReadFrom){
+        var request = new XMLHttpRequest();
+        request.open("GET", pathOfFileToReadFrom, false);
+        request.send(null);
+        var text = request.responseText;
+        return text;
+
     }
 }
