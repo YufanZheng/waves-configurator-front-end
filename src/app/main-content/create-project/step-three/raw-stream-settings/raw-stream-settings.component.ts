@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProjectDataService } from '../../project-data.service';
 
 import { JsPlumbSingleton } from '../jsPlumb-singleton';
+import { ComponentSettings } from "../component-settings";
 
 // Use jsPlumb for connection component
 declare var jsPlumb: any;
@@ -12,7 +13,7 @@ import $ from 'jquery/dist/jquery';
   templateUrl: './raw-stream-settings.component.html',
   styleUrls: ['./raw-stream-settings.component.css']
 })
-export class RawStreamSettingsComponent implements OnInit {
+export class RawStreamSettingsComponent extends ComponentSettings implements OnInit {
 
   @Input() componentId;
 
@@ -21,7 +22,9 @@ export class RawStreamSettingsComponent implements OnInit {
   private folderpath;
   private url;
 
-  constructor(private service: ProjectDataService) { }
+  constructor( service: ProjectDataService ) { 
+    super(service);
+  }
 
   ngOnInit() {
     var settings = this.service.getComponentSettingsById(this.componentId);
@@ -54,16 +57,11 @@ export class RawStreamSettingsComponent implements OnInit {
   }
 
   deleteComponent(){
-    JsPlumbSingleton.getInstance().remove( this.componentId );
+    super.deleteComponent( this.componentId );
   }
 
   detachConnections(){
-    var allConns = JsPlumbSingleton.getInstance().getAllConnections();
-    for( let conn of allConns ){
-      if( conn.sourceId == this.componentId ){
-        JsPlumbSingleton.getInstance().deleteConnection(conn);
-      }
-    }
+    super.detachConnections( this.componentId );
   }
 
 }

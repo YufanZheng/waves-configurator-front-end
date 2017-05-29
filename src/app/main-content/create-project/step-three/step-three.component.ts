@@ -84,9 +84,11 @@ export class StepThreeComponent implements OnInit {
 
   stepChange(step){
     this.updateComponentsLocation();
-    console.log(jsPlumb);
+    this.updateConnections();
     this.service.setWorflowInfo(this.workflow);
     this.stepEvent.emit(step);
+    console.log(this.service.getWorkflowInfo());
+    console.log("WARNING!!!!!!!!!!!!!!!!!!!!!!: Update connections don't work.")
   }
 
   selectComponent(evt: any): void {
@@ -121,6 +123,12 @@ export class StepThreeComponent implements OnInit {
       var yPosition = div.offset().top - $('.droppable').offset().top;
       this.service.setComponentLocationById(id, xPosition, yPosition);
     }
+  }
+
+  private updateConnections(){
+    var conns = JsPlumbSingleton.getInstance().getAllConnections();
+    console.log(conns);
+    this.service.updateConnections(conns);
   }
 
   private imgSourcePath(type: string){

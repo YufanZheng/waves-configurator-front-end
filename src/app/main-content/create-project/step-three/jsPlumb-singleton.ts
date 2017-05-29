@@ -37,9 +37,6 @@ export class JsPlumbSingleton {
                 JsPlumbSingleton.suggestLegalConns(sourceType, legalConns);
             }
 
-            alert("binding connection");
-            JsPlumbSingleton.instance.deleteConnection(conn);
-
         });
         return JsPlumbSingleton.instance;
     }

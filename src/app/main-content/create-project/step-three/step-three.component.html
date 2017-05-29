@@ -99,6 +99,42 @@
         <raw-stream-settings 
           *ngIf="selectedComponentType=='Raw Stream'" 
           [componentId]="selectedComponentId"></raw-stream-settings>
+        <rdf-stream-settings 
+          *ngIf="selectedComponentType=='RDF Stream'" 
+          [componentId]="selectedComponentId"></rdf-stream-settings>
+        <document-feed-settings 
+          *ngIf="selectedComponentType=='Document Feed'" 
+          [componentId]="selectedComponentId"></document-feed-settings>
+        <triple-store-settings 
+          *ngIf="selectedComponentType=='Triple Store'" 
+          [componentId]="selectedComponentId"></triple-store-settings>
+        <sparql-endpoint-settings 
+          *ngIf="selectedComponentType=='Sparql Endpoint'" 
+          [componentId]="selectedComponentId"></sparql-endpoint-settings>
+        <external-sources-settings 
+          *ngIf="selectedComponentType=='External Sources'" 
+          [componentId]="selectedComponentId"></external-sources-settings>
+        <rdf-converter-settings 
+          *ngIf="selectedComponentType=='RDF Converter'" 
+          [componentId]="selectedComponentId"></rdf-converter-settings>
+        <compresser-settings 
+          *ngIf="selectedComponentType=='Compresser'" 
+          [componentId]="selectedComponentId"></compresser-settings>
+        <quantitative-filter-settings 
+          *ngIf="selectedComponentType=='Quantitative Filter'" 
+          [componentId]="selectedComponentId"></quantitative-filter-settings>
+        <qualitative-filter-settings 
+          *ngIf="selectedComponentType=='Qualitative Filter'" 
+          [componentId]="selectedComponentId"></qualitative-filter-settings>
+        <semantic-filter-settings 
+          *ngIf="selectedComponentType=='Semantic Filter'" 
+          [componentId]="selectedComponentId"></semantic-filter-settings>
+        <reasoning-filter-settings 
+          *ngIf="selectedComponentType=='Reasoning Filter'" 
+          [componentId]="selectedComponentId"></reasoning-filter-settings>
+        <anomaly-detection-settings 
+          *ngIf="selectedComponentType=='Anomaly Detection'" 
+          [componentId]="selectedComponentId"></anomaly-detection-settings>
         <empty-settings 
           *ngIf="selectedComponentType==''"></empty-settings >
       </div>

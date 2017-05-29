@@ -31,6 +31,18 @@ import { StepFourComponent } from './main-content/create-project/step-four/step-
 import { RawStreamSettingsComponent } from './main-content/create-project/step-three/raw-stream-settings/raw-stream-settings.component';
 import { EmptySettingsComponent } from './main-content/create-project/step-three/empty-settings/empty-settings.component';
 import { CreateProjectComponent } from './main-content/create-project/create-project.component';
+import { RdfStreamSettingsComponent } from './main-content/create-project/step-three/rdf-stream-settings/rdf-stream-settings.component';
+import { DocumentFeedSettingsComponent } from './main-content/create-project/step-three/document-feed-settings/document-feed-settings.component';
+import { TripleStoreSettingsComponent } from './main-content/create-project/step-three/triple-store-settings/triple-store-settings.component';
+import { SparqlEndpointSettingsComponent } from './main-content/create-project/step-three/sparql-endpoint-settings/sparql-endpoint-settings.component';
+import { ExternalSourcesSettingsComponent } from './main-content/create-project/step-three/external-sources-settings/external-sources-settings.component';
+import { RdfConverterSettingsComponent } from './main-content/create-project/step-three/rdf-converter-settings/rdf-converter-settings.component';
+import { CompresserSettingsComponent } from './main-content/create-project/step-three/compresser-settings/compresser-settings.component';
+import { QuantitativeFilterSettingsComponent } from './main-content/create-project/step-three/quantitative-filter-settings/quantitative-filter-settings.component';
+import { QualitativeFilterSettingsComponent } from './main-content/create-project/step-three/qualitative-filter-settings/qualitative-filter-settings.component';
+import { SemanticFilterSettingsComponent } from './main-content/create-project/step-three/semantic-filter-settings/semantic-filter-settings.component';
+import { ReasoningFilterSettingsComponent } from './main-content/create-project/step-three/reasoning-filter-settings/reasoning-filter-settings.component';
+import { AnomalyDetectionSettingsComponent } from './main-content/create-project/step-three/anomaly-detection-settings/anomaly-detection-settings.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +64,19 @@ import { CreateProjectComponent } from './main-content/create-project/create-pro
     EmptySettingsComponent,
     ImportProjectComponent,
     WaitingPageComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    RdfStreamSettingsComponent,
+    DocumentFeedSettingsComponent,
+    TripleStoreSettingsComponent,
+    SparqlEndpointSettingsComponent,
+    ExternalSourcesSettingsComponent,
+    RdfConverterSettingsComponent,
+    CompresserSettingsComponent,
+    QuantitativeFilterSettingsComponent,
+    QualitativeFilterSettingsComponent,
+    SemanticFilterSettingsComponent,
+    ReasoningFilterSettingsComponent,
+    AnomalyDetectionSettingsComponent
   ],
   imports: [
     BrowserModule,

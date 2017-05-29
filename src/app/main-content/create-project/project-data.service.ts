@@ -13,7 +13,7 @@ export class ProjectDataService {
     
     private projectData;
 
-    constructor( private _http: Http ) { 
+    constructor( ) { 
         this.initData();
     }
 
@@ -51,6 +51,18 @@ export class ProjectDataService {
 
     addWorkflowComponent(newComponent){
         this.projectData.workflow.components.push(newComponent);
+        return this.projectData.workflow;
+    }
+
+    removeWorkflowComponentById(componentId){
+        var components = this.getWorkflowInfo().components;
+        for( var i = 0; i < components.length; i++ ){
+            if( componentId == components[i].id ){
+                components.splice(i, 1);
+                break;
+            }
+        }
+        return this.projectData.workflow;
     }
 
     getComponentSettingsById(componentId){
@@ -77,6 +89,7 @@ export class ProjectDataService {
                 break;
             }
         }
+        return this.projectData.workflow;
     }
 
     setComponentLocationById(componentId, xPosition, yPosition){
@@ -88,15 +101,45 @@ export class ProjectDataService {
                 break;
             }
         }
+        return this.projectData.workflow;
     }
 
     addWorkflowLink(sourceId, targetId){
         for( var i = 0; i < this.projectData.workflow.components.length; i++ ){
             var currentComponent = this.projectData.workflow.components[i];
-            if( currentComponent.id == sourceId ){
+            if( currentComponent.id == sourceId || !this.projectData.workflow.components[i].linksTo.includes(targetId) ){
                 this.projectData.workflow.components[i].linksTo.push(targetId);
                 break;
             }
+        }
+        return this.projectData.workflow;
+    }
+
+    removeAllConnections(){
+        console.log("Before remove all conections");
+        console.log(this.projectData.workflow);
+        for( var i = 0 ; i < this.projectData.workflow.components.length ; i++ ){
+            var component = this.projectData.workflow.components[i];
+            var newComponent = {
+                "id": component.id,
+                "componentType": component.componentType,
+                "xPosition": component.xPosition,
+                "yPosition": component.yPosition,
+                "linksTo": [],
+                "settings": component.settings
+            };
+            this.projectData.workflow.components[i] = newComponent;
+        }
+        console.log("After remove all conections");
+        console.log(this.projectData.workflow);
+    }
+
+    updateConnections(conns){
+        this.removeAllConnections();
+        for( let conn of conns ){
+            var sourceId = conn.sourceId;
+            var targetId = conn.targetId;
+            this.addWorkflowLink(sourceId, targetId);
         }
     }
 
