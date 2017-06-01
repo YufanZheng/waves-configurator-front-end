@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
@@ -9,9 +9,12 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 })
 export class ExecuteProjectComponent implements OnInit {
 
+  @ViewChild('reporter') reporter;
+  private shown: string = "configuration";
+
   private projectName:  string;
   private location: string;
-  private serverUri: string  = "http://localhost:8080/waves-configurator/jarxs/project-data/";
+  private serverUri: string  = "http://localhost:8080/waves-configurator/jarxs/";
   private properties = [];
 
   private waiting: boolean = false;
@@ -32,7 +35,7 @@ export class ExecuteProjectComponent implements OnInit {
   }
 
   private getProjectInfo(){
-    let destination = this.serverUri + "project-info";
+    let destination = this.serverUri + "project-data/project-info";
     let xhr: XMLHttpRequest = new XMLHttpRequest();
     xhr.open("POST", destination, true);
     xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");
@@ -61,6 +64,37 @@ export class ExecuteProjectComponent implements OnInit {
     xhr.send(this.projectName);
   } 
 
+  private execute(){
+    let destination = this.serverUri + "project-execution/run";
+    let xhr: XMLHttpRequest = new XMLHttpRequest();
+    xhr.open("POST", destination, true);
+    xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");
+    xhr.onreadystatechange = (event) => {
+      if (xhr.readyState == XMLHttpRequest.DONE) {
+        var response = JSON.parse(xhr.responseText);
+        if( response.success ){
+          console.log(response.logs);
+          this.reporter.nativeElement.insertAdjacentHTML("beforeend", response.logs);
+          this.shown = "logs";
+        } else {
+          alert( response.errorMessage );
+        }
+      }
+    }
+    xhr.onloadstart = (event) => {
+      this.waitMsg = "Submitting Project into Cluster ...";
+      this.waiting = !this.waiting;
+    }
+    xhr.onloadend = (event) => {
+      this.waitMsg = "";
+      this.waiting = !this.waiting;
+    }
+    xhr.onerror = (event) => {
+      alert("Cannot connect to Server, please check if you have launched the server or refresh the page.");
+    }
+    xhr.send(this.projectName);
+  }
+
   private extractData(data){
     this.location = data.location;
     for( var property of data.properties ){
@@ -87,6 +121,14 @@ export class ExecuteProjectComponent implements OnInit {
       }
     }
     return properties;
+  }
+
+  private selectConfigTable(){
+    this.shown = "configuration";
+  }
+
+  private selectLogsReporter(){
+    this.shown = "logs";
   }
 
 }

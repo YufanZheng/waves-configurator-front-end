@@ -1,6 +1,6 @@
 <div [hidden]="waiting" class="container">
   <div class="row">
-    <div class="col-xs-8 col-sm-8 col-md-8">
+    <div class="col-xs-8">
       <h2>
         You have uploaded project: <mark class="text-warning">{{projectName}}</mark> 
       </h2>
@@ -8,34 +8,50 @@
         The project configuration is located at <span class="text-primary">{{location}}.</span>
       </p>
     </div>
-    <div class="col-xs-2 col-sm-2 col-md-2">
-      <button type="button" class="btn btn-lg btn-block btn-success" (click)="execute()">Execute Program </button>
-    </div>
-    <div class="col-xs-2 col-sm-2 col-md-2">
-      <button type="button" class="btn btn-lg btn-block btn-danger" (click)="stop()">Stop Program </button>
+    <div class="col-xs-4">
+      <p style="padding: 20px"></p>
+      <button type="button" class="btn btn-success" (click)="execute()">Execute Program </button>
+      <button type="button" class="btn btn-danger" (click)="stop()">Stop Program </button>
     </div>
   </div>
+  <br>
   <div class="row">
-    <div class="col-xs-5 col-sm-5 col-md-5">
-      <h4 class="lead text-center"><strong>Logs Reporter</strong></h4>
-      <div class="form-control" style="min-height:800px"></div>
-    </div>
-    <div class="col-xs-7 col-sm-7 col-md-7">
-      <h4 class="lead text-center"><strong>Project Configuration Table</strong></h4>
-      <table class="table table-striped table-bordered ">
-        <thead>
-          <tr>
-            <td>Property</td>
-            <td>Value</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let property of properties">
-            <td>{{property.key}}</td>
-            <td>{{property.value}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <ul class="nav nav-tabs" role="tablist">
+        <li [class.active]="shown=='configuration'" role="tablist">
+          <a (click)="selectConfigTable()">Configuration Table</a>
+        </li>
+        <li [class.active]="shown=='logs'" role="tablist">
+          <a (click)="selectLogsReporter()">Logs Reporter</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div 
+          [class.active.in]="shown=='configuration'"
+          class="tab-pane">
+          <h4 class="lead text-center"><strong>Project Configuration Table</strong></h4>
+          <table class="table table-striped table-bordered ">
+            <thead>
+              <tr>
+                <td>Property</td>
+                <td>Value</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let property of properties">
+                <td>{{property.key}}</td>
+                <td>{{property.value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          [class.active.in]="shown=='logs'" 
+          class="tab-pane">
+          <h4 class="lead text-center"><strong>Logs Reporter</strong></h4>
+          <textarea #reporter class="form-control" style="min-height:800px"></textarea>
+        </div>
+      </div>
     </div>
   </div>
 </div>
