@@ -18,4 +18,5 @@
 textarea {
     font-family: Tahoma, sans-serif;
     resize: vertical;
+    margin-bottom: 20px;
 }

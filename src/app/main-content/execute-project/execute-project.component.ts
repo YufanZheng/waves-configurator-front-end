@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Directive, Component, OnInit, ViewChild, Output, EventEmitter  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
