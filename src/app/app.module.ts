@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ToolTipModule } from 'angular2-tooltip';
+import { DataTableModule } from "angular2-datatable";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +45,8 @@ import { SemanticFilterSettingsComponent } from './main-content/create-project/s
 import { ReasoningFilterSettingsComponent } from './main-content/create-project/step-three/reasoning-filter-settings/reasoning-filter-settings.component';
 import { AnomalyDetectionSettingsComponent } from './main-content/create-project/step-three/anomaly-detection-settings/anomaly-detection-settings.component';
 
+import { DataFilterPipe }   from './main-content/execute-project/data-filter.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,14 +79,16 @@ import { AnomalyDetectionSettingsComponent } from './main-content/create-project
     QualitativeFilterSettingsComponent,
     SemanticFilterSettingsComponent,
     ReasoningFilterSettingsComponent,
-    AnomalyDetectionSettingsComponent
+    AnomalyDetectionSettingsComponent,
+    DataFilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpModule,
-    ToolTipModule
+    ToolTipModule,
+    DataTableModule
   ],
   providers: [{ provide: ProjectDataService, useClass: ProjectDataService }],
   bootstrap: [AppComponent]

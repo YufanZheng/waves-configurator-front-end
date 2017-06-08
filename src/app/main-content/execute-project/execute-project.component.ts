@@ -1,6 +1,9 @@
-import { Directive, Component, OnInit, ViewChild, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
+// Use jQuery
+import $ from 'jquery/dist/jquery';
 
 @Component({
   selector: 'execute-project',
@@ -9,8 +12,12 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 })
 export class ExecuteProjectComponent implements OnInit {
 
-  @ViewChild('reporter') reporter;
+  @ViewChild('submitLogs') submitLogs;
   private shown: string = "configuration";
+  public filterQuery = "";
+  public rowsOnPage = 10;
+  public sortBy = "name";
+  public sortOrder = "asc";
 
   private projectName:  string;
   private location: string;
@@ -73,8 +80,7 @@ export class ExecuteProjectComponent implements OnInit {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         var response = JSON.parse(xhr.responseText);
         if( response.success ){
-          console.log(response.logs);
-          this.reporter.nativeElement.insertAdjacentHTML("beforeend", response.logs);
+          this.submitLogs.nativeElement.insertAdjacentHTML("beforeend", response.logs);
           this.shown = "logs";
         } else {
           alert( response.errorMessage );
@@ -100,7 +106,7 @@ export class ExecuteProjectComponent implements OnInit {
     for( var property of data.properties ){
       for( var key in property ){
         var p = {
-          "key": key,
+          "name": key,
           "value": property[key]
         };
         this.properties.push(p);
@@ -127,8 +133,12 @@ export class ExecuteProjectComponent implements OnInit {
     this.shown = "configuration";
   }
 
-  private selectLogsReporter(){
-    this.shown = "logs";
+  private selectSubmitLogs(){
+    this.shown = "submitLogs";
+  }
+
+  private selectExecutionLogs(){
+    this.shown = "executionLogs";
   }
 
 }
