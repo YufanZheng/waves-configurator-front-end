@@ -22,7 +22,7 @@
           <a (click)="selectConfigTable()">Configuration Table</a>
         </li>
         <li [class.active]="shown=='submitLogs'" role="tablist">
-          <a (click)="selectSubmitLogs()">Submit Logs</a>
+          <a (click)="selectSubmitLogs()">Submission Logs</a>
         </li>
         <li [class.active]="shown=='executionLogs'" role="tablist">
           <a (click)="selectExecutionLogs()">Execution Logs</a>
@@ -103,7 +103,8 @@
         <div
             [class.active.in]="shown=='submitLogs'" 
             class="tab-pane">
-            <h4 class="lead text-center"><strong>Submit Logs</strong></h4>
+            <section [innerHTML]="sampleContent" highlight-js-content=".highlight"></section>
+            <h4 class="lead text-center"><strong>Submission Logs</strong></h4>
             <textarea #submitLogs class="form-control" style="min-height:800px"></textarea>
         </div>
         <div

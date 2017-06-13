@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ToolTipModule } from 'angular2-tooltip';
 import { DataTableModule } from "angular2-datatable";
+import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -88,9 +89,11 @@ import { DataFilterPipe }   from './main-content/execute-project/data-filter.pip
     FormsModule,
     HttpModule,
     ToolTipModule,
-    DataTableModule
+    DataTableModule,
+    BrowserModule,
+    HighlightJsModule,
   ],
-  providers: [{ provide: ProjectDataService, useClass: ProjectDataService }],
+  providers: [HighlightJsService, { provide: ProjectDataService, useClass: ProjectDataService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

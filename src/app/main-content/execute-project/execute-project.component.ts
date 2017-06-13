@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HighlightJsService } from 'angular2-highlight-js';
 
 // Use jQuery
 import $ from 'jquery/dist/jquery';
@@ -27,7 +28,13 @@ export class ExecuteProjectComponent implements OnInit {
   private waiting: boolean = false;
   private waitMsg: string = "";
 
-  constructor(private activeRouter: ActivatedRoute, private router: Router, private http: Http){}
+  constructor(
+    private activeRouter: ActivatedRoute, 
+    private router: Router, 
+    private http: Http,
+    private service : HighlightJsService){
+
+    }
 
   ngOnInit() {
     // Load project name from routing params
@@ -40,6 +47,10 @@ export class ExecuteProjectComponent implements OnInit {
     // Get project info from triple store
     this.getProjectInfo();
   }
+
+  ngAfterViewInit() {        
+        this.service.highlight(this.submitLogs.nativeElement.querySelector('.typescript'));
+    }
 
   private getProjectInfo(){
     let destination = this.serverUri + "project-data/project-info";
@@ -112,21 +123,6 @@ export class ExecuteProjectComponent implements OnInit {
         this.properties.push(p);
       }
     }
-    this.properties = this.sortByKey(this.properties);
-    console.log(this.properties);
-  }
-
-  private sortByKey(properties){
-    for( var i = 0 ; i < properties.length ; i++ ){
-      for( var j = i + 1 ; j < properties.length ; j++ ){
-        if( properties[i].key > properties[j].key ){
-          var p = properties[i];
-          properties[i] = properties[j];
-          properties[j] = p;
-        }
-      }
-    }
-    return properties;
   }
 
   private selectConfigTable(){
