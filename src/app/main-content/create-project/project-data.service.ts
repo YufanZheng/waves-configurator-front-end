@@ -15,8 +15,6 @@ export class ProjectDataService {
 
     constructor( private http: Http ) { 
         this.initData();
-        //this.http.get('src/assets/app-data/default-project.json')
-        //    .subscribe(res => this.projectData = res.json());
     }
 
     /*-----------------------------------+
@@ -151,7 +149,6 @@ export class ProjectDataService {
 
     initData() {
         var text = this.readStringFromFileAtPath('assets/app-data/default-project.json');
-        console.log(text);
         this.projectData = JSON.parse(text);
     }
 

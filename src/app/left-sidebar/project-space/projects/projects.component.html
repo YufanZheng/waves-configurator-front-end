@@ -12,6 +12,19 @@
     <div id="{{project}}" class="panel-collapse collapse">
         <div class="panel-body">
             <table class="table">
+                <tr>
+                    <td>
+                        <span class="glyphicon glyphicon-cog text-default"></span>
+                        <a href="execute-project/{{project}}">Project Configuration</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="glyphicon glyphicon-asterisk text-warning"></span>
+                        <a href="http://localhost:9001/">Supervision</a>
+                    </td>
+                </tr>
+                <!--
                 <tr (mouseenter)="showModsProjInfo=true" (mouseleave)="showModsProjInfo=false">
                     <td>
                         <span class="glyphicon glyphicon-indent-left text-primary"></span>
@@ -40,6 +53,7 @@
                         <a href="#" *ngIf="showModsMonitoring"><span class="glyphicon glyphicon-pencil text-primary right"></span></a>
                     </td>
                 </tr>
+                -->
             </table>
         </div>
     </div>

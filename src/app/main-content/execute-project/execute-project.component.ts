@@ -134,8 +134,4 @@ export class ExecuteProjectComponent implements OnInit {
     this.shown = "submitLogs";
   }
 
-  private selectExecutionLogs(){
-    this.shown = "executionLogs";
-  }
-
 }

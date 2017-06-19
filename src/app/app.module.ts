@@ -41,12 +41,12 @@ import { ExternalSourcesSettingsComponent } from './main-content/create-project/
 import { RdfConverterSettingsComponent } from './main-content/create-project/step-three/rdf-converter-settings/rdf-converter-settings.component';
 import { CompresserSettingsComponent } from './main-content/create-project/step-three/compresser-settings/compresser-settings.component';
 import { SamplerSettingsComponent } from './main-content/create-project/step-three/sampler-settings/sampler-settings.component';
-import { QualitativeFilterSettingsComponent } from './main-content/create-project/step-three/qualitative-filter-settings/qualitative-filter-settings.component';
 import { SemanticFilterSettingsComponent } from './main-content/create-project/step-three/semantic-filter-settings/semantic-filter-settings.component';
 import { ReasoningFilterSettingsComponent } from './main-content/create-project/step-three/reasoning-filter-settings/reasoning-filter-settings.component';
 import { AnomalyDetectionSettingsComponent } from './main-content/create-project/step-three/anomaly-detection-settings/anomaly-detection-settings.component';
 
 import { DataFilterPipe }   from './main-content/execute-project/data-filter.pipe';
+import { CleanerSettingsComponent } from './main-content/create-project/step-three/cleaner-settings/cleaner-settings.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { DataFilterPipe }   from './main-content/execute-project/data-filter.pip
     RdfConverterSettingsComponent,
     CompresserSettingsComponent,
     SamplerSettingsComponent,
-    QualitativeFilterSettingsComponent,
+    CleanerSettingsComponent,
     SemanticFilterSettingsComponent,
     ReasoningFilterSettingsComponent,
     AnomalyDetectionSettingsComponent,

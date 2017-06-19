@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-xs-8">
       <h2>
-        You have uploaded project: <mark class="text-warning">{{projectName}}</mark> 
+        Viewing the detail of project: <mark class="text-warning">{{projectName}}</mark> 
       </h2>
       <p>
-        The project configuration is located at <span class="text-primary">{{location}}.</span>
+        The project configuration is located at <a href="{{location}}">{{location}}</a>.
       </p>
     </div>
     <div class="col-xs-4">
@@ -23,9 +23,6 @@
         </li>
         <li [class.active]="shown=='submitLogs'" role="tablist">
           <a (click)="selectSubmitLogs()">Submission Logs</a>
-        </li>
-        <li [class.active]="shown=='executionLogs'" role="tablist">
-          <a (click)="selectExecutionLogs()">Execution Logs</a>
         </li>
       </ul>
       <div class="tab-content">
@@ -106,12 +103,6 @@
             <section [innerHTML]="sampleContent" highlight-js-content=".highlight"></section>
             <h4 class="lead text-center"><strong>Submission Logs</strong></h4>
             <textarea #submitLogs class="form-control" style="min-height:800px"></textarea>
-        </div>
-        <div
-          [class.active.in]="shown=='executionLogs'" 
-          class="tab-pane">
-          <h4 class="lead text-center"><strong>Execution Logs</strong></h4>
-          <textarea #executionLogs class="form-control" style="min-height:800px"></textarea>
         </div>
       </div>
     </div>
