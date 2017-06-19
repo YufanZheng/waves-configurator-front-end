@@ -114,12 +114,15 @@ export class ExecuteProjectComponent implements OnInit {
 
   private extractData(data){
     this.location = data.location;
-    for( var key in data ){
-      var p = {
-        "name": key,
-        "value": data[key]
-      };
-      this.properties.push(p);
+    console.log(data.properties);
+    for( var item of data.properties ){
+      for( var key in item){
+        var p = {
+          "name": key,
+          "value": item[key]
+        };
+        this.properties.push(p);
+      }
     }
   }
 
