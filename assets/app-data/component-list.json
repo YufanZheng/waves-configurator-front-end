@@ -10,8 +10,8 @@
    "functions":[
       "RDF Converter",
       "Compresser",
-      "Quantitative Filter",
-      "Qualitative Filter"
+      "Sampler",
+      "Cleaner"
    ],
    "wavesFilters":[
       "Semantic Filter",

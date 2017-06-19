@@ -4,11 +4,11 @@ import { ComponentSettings } from "../component-settings";
 import { ProjectDataService } from '../../project-data.service';
 
 @Component({
-  selector: 'quantitative-filter-settings',
-  templateUrl: './quantitative-filter-settings.component.html',
-  styleUrls: ['./quantitative-filter-settings.component.css']
+  selector: 'sampler-settings',
+  templateUrl: './sampler-settings.component.html',
+  styleUrls: ['./sampler-settings.component.css']
 })
-export class QuantitativeFilterSettingsComponent extends ComponentSettings implements OnInit {
+export class SamplerSettingsComponent extends ComponentSettings implements OnInit {
 
   @Input() componentId;
 

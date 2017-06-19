@@ -4,8 +4,8 @@
         "targetType": [
             "RDF Converter",
             "Compresser",
-            "Quantitative Filter",
-            "Qualitative Filter"
+            "Sampler",
+            "Cleaner"
         ]
     },
     {
@@ -59,17 +59,17 @@
         ]
     },
     {
-        "sourceType": "Quantitative Filter",
+        "sourceType": "Sampler",
         "targetType": [
-            "Quantitative Filter",
+            "Sampler",
             "Compresser",
             "RDF Converter"
         ]
     },
     {
-        "sourceType": "Qualitative Filter",
+        "sourceType": "Cleaner",
         "targetType": [
-            "Quantitative Filter",
+            "Sampler",
             "Compresser",
             "RDF Converter"
         ]

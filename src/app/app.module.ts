@@ -40,7 +40,7 @@ import { SparqlEndpointSettingsComponent } from './main-content/create-project/s
 import { ExternalSourcesSettingsComponent } from './main-content/create-project/step-three/external-sources-settings/external-sources-settings.component';
 import { RdfConverterSettingsComponent } from './main-content/create-project/step-three/rdf-converter-settings/rdf-converter-settings.component';
 import { CompresserSettingsComponent } from './main-content/create-project/step-three/compresser-settings/compresser-settings.component';
-import { QuantitativeFilterSettingsComponent } from './main-content/create-project/step-three/quantitative-filter-settings/quantitative-filter-settings.component';
+import { SamplerSettingsComponent } from './main-content/create-project/step-three/sampler-settings/sampler-settings.component';
 import { QualitativeFilterSettingsComponent } from './main-content/create-project/step-three/qualitative-filter-settings/qualitative-filter-settings.component';
 import { SemanticFilterSettingsComponent } from './main-content/create-project/step-three/semantic-filter-settings/semantic-filter-settings.component';
 import { ReasoningFilterSettingsComponent } from './main-content/create-project/step-three/reasoning-filter-settings/reasoning-filter-settings.component';
@@ -76,7 +76,7 @@ import { DataFilterPipe }   from './main-content/execute-project/data-filter.pip
     ExternalSourcesSettingsComponent,
     RdfConverterSettingsComponent,
     CompresserSettingsComponent,
-    QuantitativeFilterSettingsComponent,
+    SamplerSettingsComponent,
     QualitativeFilterSettingsComponent,
     SemanticFilterSettingsComponent,
     ReasoningFilterSettingsComponent,
