@@ -4,11 +4,11 @@ import { ComponentSettings } from "../component-settings";
 import { ProjectDataService } from '../../project-data.service';
 
 @Component({
-  selector: 'qualitative-filter-settings',
-  templateUrl: './qualitative-filter-settings.component.html',
-  styleUrls: ['./qualitative-filter-settings.component.css']
+  selector: 'cleaner-settings',
+  templateUrl: './cleaner-settings.component.html',
+  styleUrls: ['./cleaner-settings.component.css']
 })
-export class QualitativeFilterSettingsComponent extends ComponentSettings implements OnInit {
+export class CleanerSettingsComponent extends ComponentSettings implements OnInit {
 
   @Input() componentId;
 
@@ -27,3 +27,4 @@ export class QualitativeFilterSettingsComponent extends ComponentSettings implem
     super.detachConnections( this.componentId );
   }
 }
+
