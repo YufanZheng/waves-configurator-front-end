@@ -5,7 +5,7 @@
       "Document Feed",
       "Triple Store",
       "Sparql Endpoint",
-      "External Sources"
+      "Web Crawler"
    ],
    "functions":[
       "RDF Converter",

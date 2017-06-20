@@ -6,6 +6,7 @@ h3 {
 
 .workspace {
     margin: 30px;
+    margin-top: 0px;
     height: 500px;
     background-color: #f5f5f5;
     z-index: 0;

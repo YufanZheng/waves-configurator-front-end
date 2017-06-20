@@ -14,24 +14,24 @@
     </div>
   </div>
   <div class="row">
-  <!-- Form -->
-  <form class="form-horizontal">
-    <!-- Form Groups -->
-    <div class="form-group">
-      <label class="control-label col-xs-2 col-sm-2 col-md-2">Reporter :</label>
-      <div class="col-xs-9 col-sm-9 col-md-9"> 
-        <select name="reporter" class="form-control selectpicker" [(ngModel)]="metrics.reporter">
-          <option *ngFor="let reporter of reporterList" [ngValue]="metrics.reporter">{{ reporter }}</option>
-        </select>
+    <!-- Form -->
+    <form class="form-horizontal">
+      <!-- Form Groups -->
+      <div class="form-group">
+        <label class="control-label col-xs-2 col-sm-2 col-md-2">Reporter :</label>
+        <div class="col-xs-9 col-sm-9 col-md-9"> 
+          <select name="reporter" class="form-control selectpicker" [(ngModel)]="metrics.reporter">
+            <option *ngFor="let reporter of reporterList" [ngValue]="metrics.reporter">{{ reporter }}</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-xs-2 col-sm-2 col-md-2">Frequency :</label>
-      <div class="col-xs-9 col-sm-9 col-md-9"> 
-        <input name="frequency" class="form-control selectpicker" [(ngModel)]="metrics.frequency">
+      <div class="form-group">
+        <label class="control-label col-xs-2 col-sm-2 col-md-2">Frequency :</label>
+        <div class="col-xs-9 col-sm-9 col-md-9"> 
+          <input name="frequency" class="form-control selectpicker" [(ngModel)]="metrics.frequency">
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
   <div class="row">
     <div class="col-xs-11 col-sm-11 col-md-11">
       <div class="pull-right">

@@ -38,7 +38,7 @@
         ]
     },
     {
-        "sourceType": "External Sources",
+        "sourceType": "Web Crawler",
         "targetType": [
             "Anomaly Detection"
         ]

@@ -4,11 +4,11 @@ import { ComponentSettings } from "../component-settings";
 import { ProjectDataService } from '../../project-data.service';
 
 @Component({
-  selector: 'external-sources-settings',
-  templateUrl: './external-sources-settings.component.html',
-  styleUrls: ['./external-sources-settings.component.css']
+  selector: 'web-crawler-settings',
+  templateUrl: './web-crawler-settings.component.html',
+  styleUrls: ['./web-crawler-settings.component.css']
 })
-export class ExternalSourcesSettingsComponent extends ComponentSettings implements OnInit {
+export class WebCrawlerSettingsComponent extends ComponentSettings implements OnInit {
 
   @Input() componentId;
 
@@ -26,5 +26,4 @@ export class ExternalSourcesSettingsComponent extends ComponentSettings implemen
   detachConnections(){
     super.detachConnections( this.componentId );
   }
-  
 }

@@ -38,7 +38,6 @@ import { RdfStreamSettingsComponent } from './main-content/create-project/step-t
 import { DocumentFeedSettingsComponent } from './main-content/create-project/step-three/document-feed-settings/document-feed-settings.component';
 import { TripleStoreSettingsComponent } from './main-content/create-project/step-three/triple-store-settings/triple-store-settings.component';
 import { SparqlEndpointSettingsComponent } from './main-content/create-project/step-three/sparql-endpoint-settings/sparql-endpoint-settings.component';
-import { ExternalSourcesSettingsComponent } from './main-content/create-project/step-three/external-sources-settings/external-sources-settings.component';
 import { RdfConverterSettingsComponent } from './main-content/create-project/step-three/rdf-converter-settings/rdf-converter-settings.component';
 import { CompresserSettingsComponent } from './main-content/create-project/step-three/compresser-settings/compresser-settings.component';
 import { SamplerSettingsComponent } from './main-content/create-project/step-three/sampler-settings/sampler-settings.component';
@@ -48,6 +47,7 @@ import { AnomalyDetectionSettingsComponent } from './main-content/create-project
 
 import { DataFilterPipe }   from './main-content/execute-project/data-filter.pipe';
 import { CleanerSettingsComponent } from './main-content/create-project/step-three/cleaner-settings/cleaner-settings.component';
+import { WebCrawlerSettingsComponent } from './main-content/create-project/step-three/web-crawler-settings/web-crawler-settings.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,6 @@ import { CleanerSettingsComponent } from './main-content/create-project/step-thr
     DocumentFeedSettingsComponent,
     TripleStoreSettingsComponent,
     SparqlEndpointSettingsComponent,
-    ExternalSourcesSettingsComponent,
     RdfConverterSettingsComponent,
     CompresserSettingsComponent,
     SamplerSettingsComponent,
@@ -83,7 +82,8 @@ import { CleanerSettingsComponent } from './main-content/create-project/step-thr
     ReasoningFilterSettingsComponent,
     AnomalyDetectionSettingsComponent,
     DataFilterPipe,
-    FileSelectDirective
+    FileSelectDirective,
+    WebCrawlerSettingsComponent
   ],
   imports: [
     BrowserModule,
