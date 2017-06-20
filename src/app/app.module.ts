@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ToolTipModule } from 'angular2-tooltip';
 import { DataTableModule } from "angular2-datatable";
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -81,7 +82,8 @@ import { CleanerSettingsComponent } from './main-content/create-project/step-thr
     SemanticFilterSettingsComponent,
     ReasoningFilterSettingsComponent,
     AnomalyDetectionSettingsComponent,
-    DataFilterPipe
+    DataFilterPipe,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
