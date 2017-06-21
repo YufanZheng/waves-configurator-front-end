@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input } from '@angular/core';
 import { ComponentSettings } from "../component-settings";
 
 import { ProjectDataService } from '../../project-data.service';
@@ -22,14 +22,34 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
   }
 
   ngOnInit() {
-    var settings = this.service.getComponentSettingsById(this.componentId);
-    this.uploader.queue = ( typeof settings.queue == 'undefined' ) ? [] : settings.queue;
-    this.uploader.progress = ( typeof settings.progress == 'undefined' ) ? 0 : settings.progress;
+    this.loadSettings(this.componentId);
+  }
+
+  ngOnChanges(changes){
+    if(changes.componentId){
+      this.saveSettings( changes.componentId.previousValue );
+      this.loadSettings( changes.componentId.currentValue );
+    }
   }
   
   ngOnDestroy() {
-     this.saveSettings();
+     this.saveSettings(this.componentId);
    }
+
+  loadSettings(componentId) {
+    var settings = this.service.getComponentSettingsById(componentId);
+    this.uploader.queue = ( typeof settings.queue == 'undefined' ) ? [] : settings.queue;
+    this.uploader.progress = ( typeof settings.progress == 'undefined' ) ? 0 : settings.progress;
+  }
+
+  saveSettings(componentId){
+    var settings;
+    settings = {
+      "queue": this.uploader.queue,
+      "progress": this.uploader.progress
+    } 
+    this.service.setComponentSettingsById(componentId, settings);
+  }
 
   deleteComponent(){
     super.deleteComponent( this.componentId );
@@ -38,13 +58,6 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
   detachConnections(){
     super.detachConnections( this.componentId );
   }
-
-  saveSettings(){
-    var settings;
-    settings = {
-      "queue": this.uploader.queue,
-      "progress": this.uploader.progress
-    } 
-    this.service.setComponentSettingsById(this.componentId, settings);
-  }
 }
+
+

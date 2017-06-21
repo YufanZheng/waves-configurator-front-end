@@ -1,8 +1,13 @@
-<p>
-  rdf-converter-settings works!
-</p>
 <form>
-  <button type="button" class="btn btn-info" (click)="saveSettings()">Save Settings</button>
-  <button type="button" class="btn btn-default" (click)="detachConnections()">Detach Connections</button>
-  <button type="button" class="btn btn-danger" (click)="deleteComponent()">Delete Component</button>
+  <div class="settings-title">
+    Feed workflow with Raw Data Stream
+    <div class="pull-right">
+      <button type="button" class="btn btn-sm btn-default" (click)="detachConnections()">
+        <span class="glyphicon glyphicon-scissors"></span> Deatch Conns.
+      </button>
+      <button type="button" class="btn btn-sm btn-default" (click)="deleteComponent()">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </div>
+  </div>
 </form>

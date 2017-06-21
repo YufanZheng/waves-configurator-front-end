@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input } from '@angular/core';
 import { ComponentSettings } from "../component-settings";
 
 import { ProjectDataService } from '../../project-data.service';
@@ -7,7 +7,7 @@ import { ProjectDataService } from '../../project-data.service';
   templateUrl: './compresser-settings.component.html',
   styleUrls: ['./compresser-settings.component.css']
 })
-export class CompresserSettingsComponent extends ComponentSettings implements OnInit {
+export class CompresserSettingsComponent extends ComponentSettings implements OnInit, OnDestroy {
 
   @Input() componentId;
 
@@ -16,6 +16,26 @@ export class CompresserSettingsComponent extends ComponentSettings implements On
   }
 
   ngOnInit() {
+    this.loadSettings( this.componentId );
+  }
+        
+  ngOnChanges(changes){
+    if(changes.componentId){
+      this.saveSettings( changes.componentId.previousValue );
+      this.loadSettings( changes.componentId.currentValue );
+    }
+  }
+
+  ngOnDestroy() {
+    this.saveSettings(this.componentId);
+  }
+
+  loadSettings(componentId) {
+
+  }
+
+  saveSettings(componentId) {
+
   }
 
   deleteComponent(){

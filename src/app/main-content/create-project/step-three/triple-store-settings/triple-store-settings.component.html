@@ -1,6 +1,14 @@
 <form class="form-horizontal">
-  <div class="form-group">
-    <legend>Triple Store: Feed data to workflow or provide storage support for processing </legend>
+  <div class="settings-title">
+    Triple Store: Feed data to workflow or provide storage support for processing
+    <div class="pull-right">
+      <button type="button" class="btn btn-sm btn-default" (click)="detachConnections()">
+        <span class="glyphicon glyphicon-scissors"></span> Deatch Conns.
+      </button>
+      <button type="button" class="btn btn-sm btn-default" (click)="deleteComponent()">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </div>
   </div>
 
   <div class="form-group">
@@ -22,10 +30,10 @@
   <div class="form-group">
     <label class="control-label col-sm-2">Store Type:</label>
     <div class="col-sm-3">
-      <select class="form-control">
-        <option value="RDF4J">RDF4J</option>
-        <option value="Jena">Jena</option>
-        <option value="Virtuoso">Virtuoso</option>
+      <select class="form-control" name="storeType" [(ngModel)]="storeType">
+        <option value="sesame">RDF4J</option>
+        <option value="jena">Jena</option>
+        <option value="virtuoso">Virtuoso</option>
       </select>
     </div>
   </div>
@@ -37,11 +45,4 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-10 col-sm-offset-2">
-      <button type="button" class="btn btn-info" (click)="saveSettings()">Save Settings</button>
-      <button type="button" class="btn btn-default" (click)="detachConnections()">Detach Connections</button>
-      <button type="button" class="btn btn-danger" (click)="deleteComponent()">Delete Component</button>
-    </div>
-  </div>
 </form>

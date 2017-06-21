@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input } from '@angular/core';
 import { ComponentSettings } from "../component-settings";
 
 import { ProjectDataService } from '../../project-data.service';
@@ -8,7 +8,7 @@ import { ProjectDataService } from '../../project-data.service';
   templateUrl: './cleaner-settings.component.html',
   styleUrls: ['./cleaner-settings.component.css']
 })
-export class CleanerSettingsComponent extends ComponentSettings implements OnInit {
+export class CleanerSettingsComponent extends ComponentSettings implements OnInit, OnDestroy {
 
   @Input() componentId;
 
@@ -17,6 +17,26 @@ export class CleanerSettingsComponent extends ComponentSettings implements OnIni
   }
 
   ngOnInit() {
+    this.loadSettings( this.componentId );
+  }
+        
+  ngOnChanges(changes){
+    if(changes.componentId){
+      this.saveSettings( changes.componentId.previousValue );
+      this.loadSettings( changes.componentId.currentValue );
+    }
+  }
+
+  ngOnDestroy() {
+    this.saveSettings(this.componentId);
+  }
+
+  loadSettings(componentId) {
+
+  }
+
+  saveSettings(componentId) {
+
   }
 
   deleteComponent(){
