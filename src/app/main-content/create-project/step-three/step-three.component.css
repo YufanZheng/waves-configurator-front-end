@@ -15,7 +15,6 @@ h3 {
 .sketchpad {
     height: 500px;
     border: 6px solid #f5f5f5;
-    border-radius: 20px;
     z-index: 1;
 }
 

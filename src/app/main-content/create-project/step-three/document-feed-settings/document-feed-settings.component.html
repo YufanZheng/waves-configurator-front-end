@@ -1,6 +1,15 @@
 <form>
-  <div class="form-group">
-    <legend>Select RDF Files to Feed your Workflow</legend>
+
+  <div class="settings-title">
+    Select RDF Files to Feed your Workflow
+    <div class="pull-right">
+      <button type="button" class="btn btn-sm btn-default" (click)="detachConnections()">
+        <span class="glyphicon glyphicon-scissors"></span> Deatch Conns.
+      </button>
+      <button type="button" class="btn btn-sm btn-default" (click)="deleteComponent()">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-3">
@@ -68,7 +77,4 @@
         </div>
     </div>
   </div>
-  <button type="button" class="btn btn-info" (click)="saveSettings()">Save Settings</button>
-  <button type="button" class="btn btn-default" (click)="detachConnections()">Detach Connections</button>
-  <button type="button" class="btn btn-danger" (click)="deleteComponent()">Delete Component</button>
 </form>

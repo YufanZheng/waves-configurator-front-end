@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input } from '@angular/core';
 import { ProjectDataService } from '../../project-data.service';
 
 import { JsPlumbSingleton } from '../jsPlumb-singleton';
@@ -13,7 +13,7 @@ import $ from 'jquery/dist/jquery';
   templateUrl: './raw-stream-settings.component.html',
   styleUrls: ['./raw-stream-settings.component.css']
 })
-export class RawStreamSettingsComponent extends ComponentSettings implements OnInit {
+export class RawStreamSettingsComponent extends ComponentSettings implements OnInit, OnDestroy {
 
   @Input() componentId;
 
@@ -27,6 +27,21 @@ export class RawStreamSettingsComponent extends ComponentSettings implements OnI
   }
 
   ngOnInit() {
+    this.loadSettings( this.componentId );
+  }
+        
+  ngOnChanges(changes){
+    if(changes.componentId){
+      this.saveSettings( changes.componentId.previousValue );
+      this.loadSettings( changes.componentId.currentValue );
+    }
+  }
+
+  ngOnDestroy() {
+    this.saveSettings(this.componentId);
+  }
+
+  loadSettings(componentId) {
     var settings = this.service.getComponentSettingsById(this.componentId);
     this.type = ( typeof settings.type == 'undefined' ) ? "WebServices" : settings.type;
     this.filepath = ( typeof settings.filepath == 'undefined' ) ? "" : settings.filepath;
@@ -34,7 +49,7 @@ export class RawStreamSettingsComponent extends ComponentSettings implements OnI
     this.url = ( typeof settings.url == 'undefined' ) ? "" : settings.url;
   }
 
-  saveSettings() {
+  saveSettings(componentId) {
     var settings;
     if( this.type == "WebServices" ){
       settings = {
@@ -52,8 +67,7 @@ export class RawStreamSettingsComponent extends ComponentSettings implements OnI
         "filepath": this.folderpath
       }
     }
-    this.service.setComponentSettingsById(this.componentId, settings);
-    console.log(this.service.getWorkflowInfo());
+    this.service.setComponentSettingsById(componentId, settings);
   }
 
   deleteComponent(){

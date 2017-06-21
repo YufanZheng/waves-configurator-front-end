@@ -3,6 +3,18 @@ form {
     margin-right: 20px;
 }
 
-legend {
-    margin-bottom: 0px;
+form {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.settings-title {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
 }

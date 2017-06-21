@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ComponentSettings } from "../component-settings";
 
 import { ProjectDataService } from '../../project-data.service';
@@ -12,7 +12,7 @@ const URL = "http://localhost:8080/waves-configurator/jarxs/project-file/upload"
   templateUrl: './document-feed-settings.component.html',
   styleUrls: ['./document-feed-settings.component.css']
 })
-export class DocumentFeedSettingsComponent extends ComponentSettings implements OnInit {
+export class DocumentFeedSettingsComponent extends ComponentSettings implements OnInit, OnDestroy {
 
   @Input() componentId;
   public uploader:FileUploader = new FileUploader({url: URL});
@@ -26,6 +26,10 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
     this.uploader.queue = ( typeof settings.queue == 'undefined' ) ? [] : settings.queue;
     this.uploader.progress = ( typeof settings.progress == 'undefined' ) ? 0 : settings.progress;
   }
+  
+  ngOnDestroy() {
+     this.saveSettings();
+   }
 
   deleteComponent(){
     super.deleteComponent( this.componentId );
@@ -42,6 +46,5 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
       "progress": this.uploader.progress
     } 
     this.service.setComponentSettingsById(this.componentId, settings);
-    console.log(this.uploader.queue);
   }
 }

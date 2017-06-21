@@ -28,6 +28,7 @@ export class StepThreeComponent implements OnInit {
   
   private selectedComponentId;
   private selectedComponentType;
+  private selectedComponentIdChange: boolean = false;
   private jsPlumbInstance;
 
   private selector;
@@ -99,6 +100,10 @@ export class StepThreeComponent implements OnInit {
         componentId = evt.path[i].id;
         break;
       }
+    }
+    // Check if we have select another component
+    if( componentId != this.selectedComponentId ){
+      this.selectedComponentIdChange = true;
     }
     // Show selection with border colors
     if (typeof componentId != 'undefined'){

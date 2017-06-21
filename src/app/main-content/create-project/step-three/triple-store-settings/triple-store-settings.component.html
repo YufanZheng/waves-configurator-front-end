@@ -1,8 +1,47 @@
-<p>
-  triple-store-settings works!
-</p>
-<form>
-  <button type="button" class="btn btn-info" (click)="saveSettings()">Save Settings</button>
-  <button type="button" class="btn btn-default" (click)="detachConnections()">Detach Connections</button>
-  <button type="button" class="btn btn-danger" (click)="deleteComponent()">Delete Component</button>
+<form class="form-horizontal">
+  <div class="form-group">
+    <legend>Triple Store: Feed data to workflow or provide storage support for processing </legend>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">Login:</label>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="login" placeholder="Login" [(ngModel)]="login">
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="pwd" placeholder="Password" [(ngModel)]="pwd">
+        </div>
+      </div>
+      <small class="form-text text-muted">Don't need to specify the login and password if not required for access</small>
+    </div>
+    <br/>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">Store Type:</label>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option value="RDF4J">RDF4J</option>
+        <option value="Jena">Jena</option>
+        <option value="Virtuoso">Virtuoso</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">Repository:</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="location" placeholder="The url of the repository where the data is saved" [(ngModel)]="location">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+      <button type="button" class="btn btn-info" (click)="saveSettings()">Save Settings</button>
+      <button type="button" class="btn btn-default" (click)="detachConnections()">Detach Connections</button>
+      <button type="button" class="btn btn-danger" (click)="deleteComponent()">Delete Component</button>
+    </div>
+  </div>
 </form>
