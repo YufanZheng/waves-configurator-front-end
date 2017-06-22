@@ -16,9 +16,11 @@
     <div class="col-md-3">
         <h3>Select files</h3>
         Multiple
-        <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+        <input type="file" accept=".rdf,.ttl,.n3,.xml,.trig,.json,.jsonld"
+            ng2FileSelect [uploader]="uploader" multiple  /><br/>
         Single
-        <input type="file" ng2FileSelect [uploader]="uploader" />
+        <input type="file" accept=".rdf,.ttl,.n3,.xml,.trig,.json,.jsonld"
+            ng2FileSelect [uploader]="uploader" />
     </div>
     <div class="col-md-9" style="margin-bottom: 40px">
         <h3>Upload queue</h3>
