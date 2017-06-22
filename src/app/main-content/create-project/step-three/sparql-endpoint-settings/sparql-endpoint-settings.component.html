@@ -1,6 +1,7 @@
-<form>
+<form class="form-horizontal">
+
   <div class="settings-title">
-    Feed workflow with Raw Data Stream
+    Static data feed from SPARQL Endpoint
     <div class="pull-right">
       <button type="button" class="btn btn-sm btn-default" (click)="detachConnections()">
         <span class="glyphicon glyphicon-scissors"></span> Deatch Conns.
@@ -10,4 +11,54 @@
       </button>
     </div>
   </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">Endpoint</label>
+    <div class="col-sm-7">
+      <input #endpoint type="text" class="form-control" name="location" placeholder="Endpoint location: http://localhost:9091/sparql..." [(ngModel)]="location">
+      <small class="form-text text-muted">Please enter the location of sparql endpoint where the query will be executed</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">Refresh Rate</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="number" class="form-control" name="refreshInterval" placeholder="Refresh interval" [(ngModel)]="refreshInterval">
+        <span class="input-group-addon">seconds</span>
+      </div>
+      <small class="form-text text-muted">How long will the data be updated</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">SPARQL Query</label>
+    <div class="col-sm-8">
+      <textarea rows="5" type="text" class="form-control" name="query" placeholder="select * where {?s ?p ?o.}" [(ngModel)]="query">
+      </textarea>
+      <small class="form-text text-muted">It is recommended to have a SPARQL LIMIT 500 operator when do the data preview request. If not, it may take long time to finish the request.</small>
+    </div>
+  </div>
+
+  <div class="col-sm-offset-2">
+    <button class="btn btn-primary" (click)="sparql()">Preview Data</button>
+  </div>
+
+  <div class="preview" *ngIf="showResult">
+    <div class="preview-dialog">
+      <div class="preview-header">
+        <button class="close" (click)="showResult=false">&times;</button>
+        <h4 class="preview-title">SPARQL Feed Data Preview</h4>
+      </div>
+      <div class="preview-body" [innerHTML]="resultTable">
+        
+      </div>
+      <div class="preview-footer">
+        <button class="btn btn-primary" (click)="showResult=false">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-backdrop" *ngIf="showResult" (click)="showResult=false"></div>
+
 </form>

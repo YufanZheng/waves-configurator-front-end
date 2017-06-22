@@ -16,6 +16,8 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
 
   @Input() componentId;
   public uploader:FileUploader = new FileUploader({url: URL});
+  public showPreview = false;
+  public content = "";
 
   constructor( service: ProjectDataService ) { 
     super(service);
@@ -57,6 +59,15 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
 
   detachConnections(){
     super.detachConnections( this.componentId );
+  }
+
+  preview(file){
+    var reader = new FileReader();
+    reader.onload = (event) => {
+      this.content = reader.result;
+      this.showPreview = true;
+    };
+    reader.readAsText(file);
   }
 }
 

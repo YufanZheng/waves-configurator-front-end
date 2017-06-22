@@ -11,6 +11,7 @@
       </button>
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-3">
         <h3>Select files</h3>
@@ -51,6 +52,10 @@
                             (click)="item.remove()">
                         <span class="glyphicon glyphicon-trash"></span> Remove
                     </button>
+                    <button type="button" class="btn btn-primary btn-xs"
+                            (click)="preview(item._file)">
+                        <span class="glyphicon glyphicon-tags"></span> Preview
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -77,4 +82,21 @@
         </div>
     </div>
   </div>
+
+  <div class="preview" *ngIf="showPreview">
+    <div class="preview-dialog">
+      <div class="preview-header">
+        <button class="close" (click)="showPreview=false">&times;</button>
+        <h4 class="preview-title">File Content</h4>
+      </div>
+      <div class="preview-body">
+        <p [innerHTML]="content"></p>
+      </div>
+      <div class="preview-footer">
+        <button class="btn btn-primary" (click)="showPreview=false">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-backdrop" *ngIf="showPreview" (click)="showPreview=false"></div>
 </form>

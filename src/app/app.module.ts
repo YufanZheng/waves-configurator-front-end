@@ -7,6 +7,7 @@ import { ToolTipModule } from 'angular2-tooltip';
 import { DataTableModule } from "angular2-datatable";
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -94,6 +95,7 @@ import { WebCrawlerSettingsComponent } from './main-content/create-project/step-
     DataTableModule,
     BrowserModule,
     HighlightJsModule,
+    Ng2Bs3ModalModule,
   ],
   providers: [HighlightJsService, { provide: ProjectDataService, useClass: ProjectDataService }],
   bootstrap: [AppComponent]
