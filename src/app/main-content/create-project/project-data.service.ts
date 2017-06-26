@@ -85,6 +85,8 @@ export class ProjectDataService {
         for( var i = 0; i < this.projectData.workflow.components.length; i++ ){
             var currentComponent = this.projectData.workflow.components[i];
             if( currentComponent.id == componentId ){
+                // If componentId exists, save its settings
+                // If not exists, do nothing
                 this.projectData.workflow.components[i].settings = settings;
                 break;
             }

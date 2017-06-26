@@ -19,7 +19,7 @@
         <input type="file" accept=".rdf,.ttl,.n3,.xml,.trig,.json,.jsonld"
             ng2FileSelect [uploader]="uploader" multiple  /><br/>
         Single
-        <input type="file" accept=".rdf,.ttl,.n3,.xml,.trig,.json,.jsonld"
+        <input type="file" accept=".rdf,.ttl,.n3,.xml,.trig,.json,.jsonld" 
             ng2FileSelect [uploader]="uploader" />
     </div>
     <div class="col-md-9" style="margin-bottom: 40px">
@@ -92,7 +92,7 @@
         <h4 class="preview-title">File Content</h4>
       </div>
       <div class="preview-body">
-        <p [innerHTML]="content"></p>
+        <pre>{{content}}</pre>
       </div>
       <div class="preview-footer">
         <button class="btn btn-primary" (click)="showPreview=false">Close</button>

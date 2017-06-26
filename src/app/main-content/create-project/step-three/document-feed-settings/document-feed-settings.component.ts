@@ -45,8 +45,7 @@ export class DocumentFeedSettingsComponent extends ComponentSettings implements 
   }
 
   saveSettings(componentId){
-    var settings;
-    settings = {
+    var settings = {
       "queue": this.uploader.queue,
       "progress": this.uploader.progress
     } 

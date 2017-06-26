@@ -20,9 +20,9 @@ export class SparqlEndpointSettingsComponent extends ComponentSettings implement
   private showResult = false;
   private resultTable = "";
 
-  private location = 'http://dbpedia.org/sparql';
+  private location;
   private refreshInterval;
-  private query ='select * where { ?s ?p ?o. } LIMIT 10';
+  private query;
   private sparqlResult;
 
   constructor( service: ProjectDataService, private http: Http ) { 
@@ -45,11 +45,19 @@ export class SparqlEndpointSettingsComponent extends ComponentSettings implement
   }
 
   loadSettings(componentId) {
-
+    var settings = this.service.getComponentSettingsById(componentId);
+    this.location = ( typeof settings.location == 'undefined' ) ? 'http://dbpedia.org/sparql' : settings.location;
+    this.refreshInterval = ( typeof settings.refreshInterval == 'undefined' ) ? 120 : settings.refreshInterval;
+    this.query = ( typeof settings.query == 'undefined' ) ? 'select distinct ?Concept where {[] a ?Concept} LIMIT 100' : settings.query;
   }
 
   saveSettings(componentId) {
-
+    var settings = {
+      "location": this.location,
+      "refreshInterval": this.refreshInterval,
+      "query": this.query
+    }
+    this.service.setComponentSettingsById(componentId, settings);
   }
 
   deleteComponent(){
