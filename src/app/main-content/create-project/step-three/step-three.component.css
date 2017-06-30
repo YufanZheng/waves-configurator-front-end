@@ -29,6 +29,7 @@ h3 {
     border-left: 4px solid #f1f1f1; 
     padding-left: 0px;
     padding-right: 0px;
+    overflow: scroll;
 }
 
 .droppable {

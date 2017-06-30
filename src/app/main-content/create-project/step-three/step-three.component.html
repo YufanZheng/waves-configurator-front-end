@@ -18,7 +18,7 @@
   <!-- drag and drop the components -->
   <div class="row bg-warning sketchpad">
     <h5>Workflow Space</h5>
-    <div class="droppable col-xs-10 col-sm-10 col-md-10" (click)="selectComponent($event)">
+    <div class="droppable col-xs-10" (click)="selectComponent($event)">
       <!-- Action Buttons and dropdown -->
       <div class="btn-group btn-actions pull-right">
         <button type="button" class="btn btn-sm btn-success dropdown-toggle action-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,7 +34,7 @@
       </div>
     </div>
     <!-- Selector Panel -->
-    <div class="col-xs-2 col-sm-2 col-md-2 selector">
+    <div class="col-xs-2 selector">
       <div class="panel-group" id="selector">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -44,7 +44,7 @@
           </div>
           <div id="dataSource" class="panel-collapse collapse in">
             <div 
-              *ngFor="let dataSource of selector.dataSources"
+              *ngFor="let dataSource of componentList.dataSources"
               class="panel-body draggable">
               <img [src]="imgSourcePath(dataSource)" class="workflow-logo">
               {{dataSource}}
@@ -59,7 +59,7 @@
           </div>
           <div id="functions" class="panel-collapse collapse">
             <div 
-              *ngFor="let function of selector.functions"
+              *ngFor="let function of componentList.functions"
               class="panel-body draggable">
               <img [src]="imgSourcePath(function)" class="workflow-logo">
               {{function}}
@@ -74,7 +74,7 @@
           </div>
           <div id="wavesFilters" class="panel-collapse collapse">
             <div 
-              *ngFor="let wavesFilter of selector.wavesFilters"
+              *ngFor="let wavesFilter of componentList.wavesFilters"
               class="panel-body draggable">
               <img [src]="imgSourcePath(wavesFilter)" class="workflow-logo">
               {{wavesFilter}}
@@ -89,7 +89,7 @@
           </div>
           <div id="dataAnalysis" class="panel-collapse collapse">
             <div 
-              *ngFor="let analysis of selector.dataAnalysis"
+              *ngFor="let analysis of componentList.dataAnalysis"
               class="panel-body draggable">
               <img [src]="imgSourcePath(analysis)" class="workflow-logo">
               {{analysis}}
@@ -144,23 +144,22 @@
       *ngIf="selectedComponentType==''"></empty-settings >
 
 </div>
-  <!-- Button groups -->
-  <div class="row">
-    <div class="col-xs-11 col-sm-11 col-md-11">
-      <div class="pull-right">
-        <button type="button" class="btn btn-danger" routerLink="/" routerLinkActive="active">
-          <span class="glyphicon glyphicon-remove"></span>
-          Cancel
-        </button>
-        <button type="button" class="btn btn-default" (click)="stepChange(2)">
-          <span class="glyphicon glyphicon-arrow-left"></span>
-          Previous
-        </button>
-        <button type="button" class="btn btn-info" (click)="stepChange(4)">
-          Next 
-          <span class="glyphicon glyphicon-arrow-right"></span>
-        </button>
-      </div>
+<!-- Button groups -->
+<div class="row">
+  <div class="col-xs-11 col-sm-11 col-md-11">
+    <div class="pull-right">
+      <button type="button" class="btn btn-danger" routerLink="/" routerLinkActive="active">
+        <span class="glyphicon glyphicon-remove"></span>
+        Cancel
+      </button>
+      <button type="button" class="btn btn-default" (click)="stepChange(2)">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Previous
+      </button>
+      <button type="button" class="btn btn-info" (click)="stepChange(4)">
+        Next 
+        <span class="glyphicon glyphicon-arrow-right"></span>
+      </button>
     </div>
   </div>
 </div>

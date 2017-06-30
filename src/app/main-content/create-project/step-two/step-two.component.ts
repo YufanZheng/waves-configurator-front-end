@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angu
 import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 
+const DEFAULT_PORT_FILE_PATH = "assets/app-data/default-port.json";
+
 @Component({
   selector: 'step-two',
   templateUrl: './step-two.component.html',
@@ -9,34 +11,73 @@ import { ProjectDataService } from '../project-data.service';
 })
 export class StepTwoComponent implements OnInit {
 
-  // A variable to save current creating's project data
+  // -------------------------------------------------
+  // Input cluster information form ProjectDataService
+  // -------------------------------------------------
+
   @Input() cluster;
+
+  // -------------------------------------------------
+  // Variable to control steps
+  // -------------------------------------------------
+
   @Output() stepEvent = new EventEmitter<number>();
+
+  // -------------------------------------------------
+  // App data
+  // -------------------------------------------------
+
   private defaultPort;
 
+  // -------------------------------------------------
+  // Construction Functions
+  // -------------------------------------------------
+
   constructor(private service: ProjectDataService) { 
-    this.defaultPort = JSON.parse( this.readStringFromFileAtPath('assets/app-data/default-port.json') );
+    this.defaultPort = JSON.parse( this.read(DEFAULT_PORT_FILE_PATH) );
   }
 
   ngOnInit() { 
     this.cluster = this.service.getClusterInfo();
   }
 
+  private read(path){
+    var request = new XMLHttpRequest();
+    request.open("GET", path, false);
+    request.send(null);
+    var text = request.responseText;
+    return text;
+  }
+
+  // -------------------------------------------------
+  // Step change functions
+  // -------------------------------------------------
+
   stepChange(step){
     this.service.setClusterInfo(this.cluster);
     this.stepEvent.emit(step);
   }
 
+  // -------------------------------------------------
+  // Choose Type of Engine
+  // -------------------------------------------------
+
   chooseEngine(type){
     this.cluster.rspEngine = type;
   }
 
-  /**
-   * @desc  When the type of choices for service changes, the default port changes as well.
-   */
+  // -------------------------------------------------
+  // Show default ports
+  // -------------------------------------------------
+
   changeDefaultPort(type, index){
+    // When the type of choices for service changes, the default port changes as well.
     this.cluster.services[index].defaultPort = this.defaultPort[type];
   }
+
+  // -------------------------------------------------
+  // Add / Remove Rows
+  // -------------------------------------------------
 
   addService(service, index){
     this.cluster.services.splice(index, 0, service);
@@ -46,9 +87,10 @@ export class StepTwoComponent implements OnInit {
     this.cluster.services.splice(index, 1);
   }
 
-  /**
-   * @return "yes", "no" or "unknown"
-   */
+  // -------------------------------------------------
+  // Check connections "yes", "no", "unknown"
+  // -------------------------------------------------
+
   checkConnection(ip, port){
     return "no";
   }
@@ -61,6 +103,10 @@ export class StepTwoComponent implements OnInit {
       this.service.setClusterInfo(this.cluster);
     }
   }
+
+  // -------------------------------------------------
+  // Page rendering functions
+  // -------------------------------------------------
 
   /**
    * 
@@ -94,13 +140,5 @@ export class StepTwoComponent implements OnInit {
       }
     }
     return true;
-  }
-
-  private readStringFromFileAtPath(pathOfFileToReadFrom){
-    var request = new XMLHttpRequest();
-    request.open("GET", pathOfFileToReadFrom, false);
-    request.send(null);
-    var text = request.responseText;
-    return text;
   }
 }

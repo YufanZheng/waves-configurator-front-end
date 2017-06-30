@@ -1,4 +1,5 @@
 <form class="form-horizontal">
+
   <div class="settings-title">
     Web Crawler: Using external web resources to interpreter the analysis result 
     <div class="pull-right">
@@ -10,4 +11,18 @@
       </button>
     </div>
   </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-3">Facebook</label>
+    <div class="col-sm-6">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <input type="checkbox" [checked]="fbCheck" (change)="fbCheck=!fbCheck">
+        </span>
+        <input type="number" class="form-control" name="refreshInterval" placeholder="Recieve Rate" [(ngModel)]="refreshInterval">
+        <span class="input-group-addon">seconds</span>
+      </div>
+    </div>
+  </div>
+
 </form>

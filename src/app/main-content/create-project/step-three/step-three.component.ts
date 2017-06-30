@@ -15,6 +15,8 @@ import 'jquery-ui/ui/widgets/droppable';
 // Use jsPlumb for connection component
 declare var jsPlumb: any;
 
+const COMPONENT_LIST_FILE_PATH = "assets/app-data/component-list.json";
+
 @Component({
   selector: 'step-three',
   templateUrl: './step-three.component.html',
@@ -22,20 +24,43 @@ declare var jsPlumb: any;
 })
 export class StepThreeComponent implements OnInit {
 
-  // A variable to save project data which is currently created
+  // -------------------------------------------------
+  // Input project information form ProjectDataService
+  // -------------------------------------------------
+
   @Input() workflow;
+
+  // -------------------------------------------------
+  // Variable to control steps
+  // -------------------------------------------------
+
   @Output() stepEvent = new EventEmitter<number>();
   
+  // -------------------------------------------------
+  // Selected Components
+  // -------------------------------------------------
+
   private selectedComponentId;
   private selectedComponentType;
-  private selectedComponentIdChange: boolean = false;
+
+  // -------------------------------------------------
+  // Use jsPlumbInstance to connect components
+  // ------------------------------------------------- 
+
   private jsPlumbInstance;
 
-  private selector;
+  // -------------------------------------------------
+  // App Data to Load the component list
+  // ------------------------------------------------- 
+
+  private componentList;
+
+  // -------------------------------------------------
+  // Construction functions
+  // ------------------------------------------------- 
 
   constructor(private service: ProjectDataService, private http: Http) { 
-    var text = this.readStringFromFileAtPath('assets/app-data/component-list.json');
-    this.selector = JSON.parse(text);
+    this.componentList = JSON.parse( this.read(COMPONENT_LIST_FILE_PATH) );
     this.selectedComponentType = "";
     this.jsPlumbInstance = JsPlumbSingleton.getInstance();
   }
@@ -44,8 +69,20 @@ export class StepThreeComponent implements OnInit {
     this.workflow = this.service.getWorkflowInfo();
   }
 
-  ngAfterViewInit() {
+  private read(path){
+    var request = new XMLHttpRequest();
+    request.open("GET", path, false);
+    request.send(null);
+    var text = request.responseText;
+    return text;
+  }
 
+  // -------------------------------------------------
+  // Drag & Drop functions
+  // ------------------------------------------------- 
+
+  ngAfterViewInit() {
+    // Make draggable
     $('.draggable').draggable({
       containment: ".droppable",
       revert: 'invalid',
@@ -53,24 +90,10 @@ export class StepThreeComponent implements OnInit {
       appendTo: ".droppable",
       helper: this.moveHelper
     });
-
+    // Make dropable
     $('.droppable').droppable( {
-        drop: ( event, ui) => {
-          if( $(ui.draggable).hasClass("draggable") ){
-            // First time to drop - Drag from selector panel
-            var newDiv = $(ui.helper).clone(false).removeClass("draggable");
-            $('.droppable').append(newDiv);
-            JsPlumbSingleton.initNode(newDiv);
-            var newComponent = {
-                "id": newDiv.attr("id"),
-                "componentType": newDiv.text().trim(),
-                "xPosition": newDiv.offset().left - $('.droppable').offset().left,
-                "yPosition": newDiv.offset().top - $('.droppable').offset().top,
-                "linksTo": [],
-                "settings": {}
-            };
-            this.service.addWorkflowComponent(newComponent);
-          }
+        drop: (event, ui) => {
+          this.onDrop(event, ui);
         }
     });
   }
@@ -83,6 +106,30 @@ export class StepThreeComponent implements OnInit {
             </div>`;
   }
 
+  onDrop(event, ui) {
+    if( $(ui.draggable).hasClass("draggable") ){
+      // Step 1: Append to .droppable div
+      var newDiv = $(ui.helper).clone(false).removeClass("draggable");
+      $('.droppable').append(newDiv);
+      // Step 2: Init the node with jsPlumb so that it could be connected
+      JsPlumbSingleton.initNode(newDiv);
+      // Step 3: Add the new component information into project data
+      var newComponent = {
+          "id": newDiv.attr("id"),
+          "componentType": newDiv.text().trim(),
+          "xPosition": newDiv.offset().left - $('.droppable').offset().left,
+          "yPosition": newDiv.offset().top - $('.droppable').offset().top,
+          "linksTo": [],
+          "settings": {}
+      };
+      this.service.addWorkflowComponent(newComponent);
+    }
+  }
+
+  // -------------------------------------------------
+  // Step change functions
+  // -------------------------------------------------
+
   stepChange(step){
     this.updateComponentsLocation();
     this.updateConnections();
@@ -92,6 +139,10 @@ export class StepThreeComponent implements OnInit {
     console.log("WARNING!!!!!!!!!!!!!!!!!!!!!!: Update connections don't work.")
   }
 
+  // -------------------------------------------------
+  // Select component to show the settings panel
+  // -------------------------------------------------
+
   selectComponent(evt: any): void {
     // Get the selected component Id
     var componentId;
@@ -100,10 +151,6 @@ export class StepThreeComponent implements OnInit {
         componentId = evt.path[i].id;
         break;
       }
-    }
-    // Check if we have select another component
-    if( componentId != this.selectedComponentId ){
-      this.selectedComponentIdChange = true;
     }
     // Show selection with border colors
     if (typeof componentId != 'undefined'){
@@ -118,6 +165,10 @@ export class StepThreeComponent implements OnInit {
       this.selectedComponentType = "";
      }
   }
+
+  // -------------------------------------------------
+  // Update the component information
+  // -------------------------------------------------
 
   private updateComponentsLocation(){
     var componentDivs = document.getElementsByClassName('component');
@@ -136,15 +187,12 @@ export class StepThreeComponent implements OnInit {
     this.service.updateConnections(conns);
   }
 
+  // -------------------------------------------------
+  // Find image path for specific type
+  // -------------------------------------------------
+
   private imgSourcePath(type: string){
     return "assets/img/workflow/" + type.toLowerCase().split(' ').join('_') + ".png";
   }
 
-  private readStringFromFileAtPath(pathOfFileToReadFrom){
-    var request = new XMLHttpRequest();
-    request.open("GET", pathOfFileToReadFrom, false);
-    request.send(null);
-    var text = request.responseText;
-    return text;
-  }
 }

@@ -12,6 +12,11 @@ export class RdfStreamSettingsComponent extends ComponentSettings implements OnI
 
   @Input() componentId;
 
+  private type;
+  private filepath;
+  private folderpath;
+  private url;
+
   constructor( service: ProjectDataService ) { 
     super(service);
   }
@@ -32,11 +37,32 @@ export class RdfStreamSettingsComponent extends ComponentSettings implements OnI
   }
 
   loadSettings(componentId) {
-
+    var settings = this.service.getComponentSettingsById(this.componentId);
+    this.type = ( typeof settings.type == 'undefined' ) ? "WebServices" : settings.type;
+    this.filepath = ( typeof settings.filepath == 'undefined' ) ? "" : settings.filepath;
+    this.folderpath = ( typeof settings.folderpath == 'undefined' ) ? "" : settings.folderpath;
+    this.url = ( typeof settings.url == 'undefined' ) ? "" : settings.url;
   }
 
   saveSettings(componentId) {
-
+    var settings;
+    if( this.type == "WebServices" ){
+      settings = {
+        "type": "WebServices",
+        "url": this.url
+      } 
+    } else if( this.type == "Folder" ){
+      settings = {
+        "type": "Folder",
+        "folderpath": this.folderpath
+      }
+    } else if( this.type == "File" ){
+      settings = {
+        "type": "File",
+        "filepath": this.folderpath
+      }
+    }
+    this.service.setComponentSettingsById(componentId, settings);
   }
 
   deleteComponent(){
@@ -46,4 +72,5 @@ export class RdfStreamSettingsComponent extends ComponentSettings implements OnI
   detachConnections(){
     super.detachConnections( this.componentId );
   }
+
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+const BASE_SERVER_URL = "http://localhost:8080/waves-configurator/jarxs/";
+
 @Component({
   selector: 'projects',
   templateUrl: './projects.component.html',
@@ -7,32 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
   
+  // -------------------------------------------------
+  // Project List
+  // -------------------------------------------------
+
   public projects = [];
 
+  // -------------------------------------------------
+  // Init functions
+  // -------------------------------------------------
+
   ngOnInit(){
-    this.getProjectList();
+    this.loadProjectList();
   }
 
-  public showModsProjInfo = false;
-  public showModsHostsInfo = false;
-  public showModsWorkflow = false;
-  public showModsMonitoring = false;
-  private serverUri: string  = "http://localhost:8080/waves-configurator/jarxs/";
-
-  public getProjectList(){
-    let destination = this.serverUri + "project-data/project-list";
+  public loadProjectList(){
+    // Use XMLHttpRequest to get project list
     let xhr: XMLHttpRequest = new XMLHttpRequest();
-    xhr.open("GET", destination, true);
-    xhr.setRequestHeader("Content-type", "text/plain; charset=utf-8");
+    let url = BASE_SERVER_URL + "project-data/project-list";
+    xhr.open("GET", url, true);
+    // Recieve response
     xhr.onreadystatechange = (event) => {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         var response = JSON.parse(xhr.responseText);
+        // Load project list
         this.projects = response.projects;
       }
     }
     xhr.onerror = (event) => {
       alert("Cannot connect to Server, please check if you have launched the server or refresh the page.");
     }
+    // Send request
     xhr.send();
   }
 }

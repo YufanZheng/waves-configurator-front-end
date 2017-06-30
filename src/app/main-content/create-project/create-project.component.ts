@@ -6,14 +6,8 @@ import { ProjectDataService } from './project-data.service';
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.css']
 })
-export class CreateProjectComponent implements OnInit {
+export class CreateProjectComponent {
 
-  public step: number;
-
-  constructor( ){}
-
-  ngOnInit() {
-    this.step = 1;
-  }
+  public step: number = 1;
 
 }

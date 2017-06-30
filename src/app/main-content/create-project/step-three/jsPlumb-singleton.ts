@@ -4,6 +4,8 @@ import { ProjectDataService } from '../project-data.service';
 import $ from 'jquery/dist/jquery';
 declare var jsPlumb: any;
 
+const LEGAL_CONNS_FILE_PATH = "assets/app-data/legal-connections.json";
+
 export class JsPlumbSingleton {
 
     private static instance: any = jsPlumb.getInstance({
@@ -96,17 +98,16 @@ export class JsPlumbSingleton {
     }
 
     static getLegalConns(){
-        let text = JsPlumbSingleton.readStringFromFileAtPath('assets/app-data/legal-connections.json');
+        let text = JsPlumbSingleton.read(LEGAL_CONNS_FILE_PATH);
         let legalConns = JSON.parse(text);
         return legalConns;
     }
 
-    static readStringFromFileAtPath(pathOfFileToReadFrom){
+    static read(path){
         var request = new XMLHttpRequest();
-        request.open("GET", pathOfFileToReadFrom, false);
+        request.open("GET", path, false);
         request.send(null);
         var text = request.responseText;
         return text;
-
     }
 }

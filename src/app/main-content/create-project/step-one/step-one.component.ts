@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angu
 import { Http } from '@angular/http';
 import { ProjectDataService } from '../project-data.service';
 
+const LICENSE_LIST_FILE_PATH = "assets/app-data/license-list.json";
+
 @Component({
   selector: 'step-one',
   templateUrl: './step-one.component.html',
@@ -9,22 +11,33 @@ import { ProjectDataService } from '../project-data.service';
 })
 export class StepOneComponent implements OnInit {
 
-  // A variable to save current creating's project data
+  // -------------------------------------------------
+  // Input project information form ProjectDataService
+  // -------------------------------------------------
+
   @Input() project;
+
+  // -------------------------------------------------
+  // Variable to control steps
+  // -------------------------------------------------
   @Output() stepEvent = new EventEmitter<number>();
+
+  // -------------------------------------------------
+  // App data
+  // -------------------------------------------------
+
   private licenseList = [];
     
+  // -------------------------------------------------
+  // Construction functions
+  // -------------------------------------------------
+
   constructor(private service: ProjectDataService) { 
-    this.licenseList = JSON.parse( this.readStringFromFileAtPath('assets/app-data/license-list.json') );
+    this.licenseList = JSON.parse( this.readStringFromFileAtPath(LICENSE_LIST_FILE_PATH) );
   }
 
   ngOnInit() {
     this.project = this.service.getProjectInfo();
-  }
-
-  stepChange(step){
-    this.service.setProjectInfo(this.project);
-    this.stepEvent.emit(step);
   }
 
   private readStringFromFileAtPath(pathOfFileToReadFrom){
@@ -33,5 +46,14 @@ export class StepOneComponent implements OnInit {
     request.send(null);
     var text = request.responseText;
     return text;
+  }
+
+  // -------------------------------------------------
+  // Step change functions
+  // -------------------------------------------------
+
+  stepChange(step){
+    this.service.setProjectInfo(this.project);
+    this.stepEvent.emit(step);
   }
 }
