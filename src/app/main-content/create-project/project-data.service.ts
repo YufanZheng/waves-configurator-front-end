@@ -27,13 +27,13 @@ export class ProjectDataService {
 
   private initData() {
     // Load default project data
-    var text = this.readStringFromFileAtPath('assets/app-data/default-project.json');
+    var text = this.read('assets/app-data/default-project.json');
     this.projectData = JSON.parse(text);
   }
 
-  private readStringFromFileAtPath(pathOfFileToReadFrom){
+  private read(path){
     var request = new XMLHttpRequest();
-    request.open("GET", pathOfFileToReadFrom, false);
+    request.open("GET", path, false);
     request.send(null);
     var text = request.responseText;
     return text;
@@ -151,17 +151,16 @@ export class ProjectDataService {
   addWorkflowConnection(sourceId, targetId){
     for( var i = 0; i < this.projectData.workflow.components.length; i++ ){
       var currentComponent = this.projectData.workflow.components[i];
-      if( currentComponent.id == sourceId || !this.projectData.workflow.components[i].linksTo.includes(targetId) ){
-        this.projectData.workflow.components[i].linksTo.push(targetId);
-        break;
+      if( currentComponent.id == sourceId && !currentComponent.linksTo.includes(targetId) ){
+        currentComponent.linksTo.push(targetId);
+        this.printAllConns();
+        return this.projectData.workflow;
       }
     }
     return this.projectData.workflow;
   }
 
   removeAllConnections(){
-    console.log("Before remove all conections");
-    console.log(this.projectData.workflow);
     for( var i = 0 ; i < this.projectData.workflow.components.length ; i++ ){
       var component = this.projectData.workflow.components[i];
       var newComponent = {
@@ -174,8 +173,6 @@ export class ProjectDataService {
       };
       this.projectData.workflow.components[i] = newComponent;
     }
-    console.log("After remove all conections");
-    console.log(this.projectData.workflow);
   }
 
   updateConnections(conns){
@@ -184,6 +181,16 @@ export class ProjectDataService {
       var sourceId = conn.sourceId;
       var targetId = conn.targetId;
       this.addWorkflowConnection(sourceId, targetId);
+    }
+  }
+
+  public printAllConns(){
+    var workflow = this.projectData.workflow;
+    for( var i = 0 ; i < workflow.components.length ; i++ ){
+      var component = workflow.components[i];
+      for( var j = 0 ; j < component.linksTo.length ; j ++ ){
+        console.log( component.id + " -> " + component.linksTo[j] );
+      }
     }
   }
 }

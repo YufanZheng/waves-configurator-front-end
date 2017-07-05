@@ -183,7 +183,7 @@ export class StepThreeComponent implements OnInit {
 
   private updateConnections(){
     var conns = JsPlumbSingleton.getInstance().getAllConnections();
-    console.log(conns);
+    // Connections correctly gotten
     this.service.updateConnections(conns);
   }
 

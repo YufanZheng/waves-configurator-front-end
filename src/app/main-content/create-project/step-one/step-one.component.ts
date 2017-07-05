@@ -20,6 +20,7 @@ export class StepOneComponent implements OnInit {
   // -------------------------------------------------
   // Variable to control steps
   // -------------------------------------------------
+
   @Output() stepEvent = new EventEmitter<number>();
 
   // -------------------------------------------------
@@ -33,16 +34,16 @@ export class StepOneComponent implements OnInit {
   // -------------------------------------------------
 
   constructor(private service: ProjectDataService) { 
-    this.licenseList = JSON.parse( this.readStringFromFileAtPath(LICENSE_LIST_FILE_PATH) );
+    this.licenseList = JSON.parse( this.read(LICENSE_LIST_FILE_PATH) );
   }
 
   ngOnInit() {
     this.project = this.service.getProjectInfo();
   }
 
-  private readStringFromFileAtPath(pathOfFileToReadFrom){
+  private read(path){
     var request = new XMLHttpRequest();
-    request.open("GET", pathOfFileToReadFrom, false);
+    request.open("GET", path, false);
     request.send(null);
     var text = request.responseText;
     return text;
